@@ -20,8 +20,25 @@ public class Collegue {
 
     @OneToMany(mappedBy = "collegue", cascade = CascadeType.PERSIST)
     private List<RoleCollegue> roles;
+    
+    @OneToMany(mappedBy = "collegue_abs", cascade = CascadeType.PERSIST)
+    private List<Absence> absences;
+    
+    public Collegue() {
+		super();
+	}
 
-    public Long getId() {
+	public Collegue(Long id, String nom, String prenom, String email, String motDePasse, List<RoleCollegue> roles) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.motDePasse = motDePasse;
+		this.roles = roles;
+	}
+
+	public Long getId() {
         return id;
     }
 

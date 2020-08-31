@@ -2,7 +2,8 @@ package dev.domain;
 
 import javax.persistence.*;
 
-@Table(name="role_collegue")
+import dev.domain.enumerations.Role;
+
 @Entity
 public class RoleCollegue {
 

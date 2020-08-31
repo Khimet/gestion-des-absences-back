@@ -9,8 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import dev.domain.Collegue;
-import dev.domain.Role;
 import dev.domain.RoleCollegue;
+import dev.domain.enumerations.Role;
 import dev.repository.CollegueRepo;
 
 /**
