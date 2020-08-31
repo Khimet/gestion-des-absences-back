@@ -107,6 +107,29 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
+				<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+				<jdbc.url>jdbc:mysql://absences-bdd:3306/absences-db</jdbc.url>
+				<jdbc.user>root</jdbc.user>
+				<jdbc.pass>root</jdbc.pass>
+				<jpa.hibernate.ddl>create-drop</jpa.hibernate.ddl>
+				<jdbc.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</jdbc.dialect>
+				<jdbc.connections.max.active>5</jdbc.connections.max.active>
+				<!-- <app.version>${env.COMMIT_ID}</app.version> -->
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
 				<jdbc.driver>org.postgresql.Driver</jdbc.driver>
 				<jdbc.url>jdbc:postgresql://ec2-52-31-233-101.eu-west-1.compute.amazonaws.com:5432/d9vgb0okju2ssj</jdbc.url>
 				<jdbc.user>rfgxmyfvhsefqz</jdbc.user>
@@ -119,29 +142,6 @@
 				<dependency>
 					<groupId>org.postgresql</groupId>
 					<artifactId>postgresql</artifactId>
-				</dependency>
-			</dependencies>
-		</profile>
-		<profile>
-			<id>prod</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<properties>
-				<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
-				<jdbc.url>jdbc:mysql://${env.MYSQL_ADDON_HOST}:${env.MYSQL_ADDON_PORT}/${env.MYSQL_ADDON_DB}</jdbc.url>
-				<jdbc.user>${env.MYSQL_ADDON_USER}</jdbc.user>
-				<jdbc.pass>${env.MYSQL_ADDON_PASSWORD}</jdbc.pass>
-				<jpa.hibernate.ddl>${env.HIBERNATE_DDL}</jpa.hibernate.ddl>
-				<jdbc.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</jdbc.dialect>
-				<jdbc.connections.max.active>2</jdbc.connections.max.active>
-				<app.version>${env.COMMIT_ID}</app.version>
-			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>mysql</groupId>
-					<artifactId>mysql-connector-java</artifactId>
-					<scope>runtime</scope>
 				</dependency>
 			</dependencies>
 		</profile>
