@@ -49,5 +49,4 @@ public class StartupListener {
 //        col2.setRoles(Arrays.asList(new RoleCollegue(col2, Role.ROLE_UTILISATEUR)));
 //        this.collegueRepo.save(col2);
     }
-
 }
