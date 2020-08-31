@@ -107,12 +107,12 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
-				<jdbc.url>jdbc:mysql://absences-bdd:3306/absences-db</jdbc.url>
-				<jdbc.user>root</jdbc.user>
-				<jdbc.pass>root</jdbc.pass>
+				<jdbc.driver>org.postgresql.Driver</jdbc.driver>
+				<jdbc.url>jdbc:postgresql://ec2-52-31-233-101.eu-west-1.compute.amazonaws.com:5432/d9vgb0okju2ssj</jdbc.url>
+				<jdbc.user>rfgxmyfvhsefqz</jdbc.user>
+				<jdbc.pass>a403604b559b0ea4b80a94cd7a026aa284c46251ad2ce304b857469104e6c591</jdbc.pass>
 				<jpa.hibernate.ddl>create-drop</jpa.hibernate.ddl>
-				<jdbc.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</jdbc.dialect>
+				<jdbc.dialect>org.hibernate.dialect.PostgreSQLDialect</jdbc.dialect>
 				<jdbc.connections.max.active>5</jdbc.connections.max.active>
 				<!-- <app.version>${env.COMMIT_ID}</app.version> -->
 			</properties>
