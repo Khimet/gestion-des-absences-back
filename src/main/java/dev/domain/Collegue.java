@@ -24,11 +24,16 @@ public class Collegue {
     @OneToMany(mappedBy = "collegue_abs", cascade = CascadeType.PERSIST)
     private List<Absence> absences;
     
+    private int nbRtt;
+   
+    private int nbCongesPayes;
+    
     public Collegue() {
 		super();
 	}
 
-	public Collegue(Long id, String nom, String prenom, String email, String motDePasse, List<RoleCollegue> roles) {
+	public Collegue(Long id, String nom, String prenom, String email, String motDePasse, List<RoleCollegue> roles,
+			List<Absence> absences, int nbRtt, int nbCongesPayes) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -36,6 +41,9 @@ public class Collegue {
 		this.email = email;
 		this.motDePasse = motDePasse;
 		this.roles = roles;
+		this.absences = absences;
+		this.nbRtt = nbRtt;
+		this.nbCongesPayes = nbCongesPayes;
 	}
 
 	public Long getId() {
@@ -85,4 +93,54 @@ public class Collegue {
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+
+	/**
+	 * Getter
+	 * @return the absences
+	 */
+	public List<Absence> getAbsences() {
+		return absences;
+	}
+
+	/**
+	 * Setter
+	 * @param absences the absences to set
+	 */
+	public void setAbsences(List<Absence> absences) {
+		this.absences = absences;
+	}
+
+	/**
+	 * Getter
+	 * @return the nbRtt
+	 */
+	public int getNbRtt() {
+		return nbRtt;
+	}
+
+	/**
+	 * Setter
+	 * @param nbRtt the nbRtt to set
+	 */
+	public void setNbRtt(int nbRtt) {
+		this.nbRtt = nbRtt;
+	}
+
+	/**
+	 * Getter
+	 * @return the nbCongesPayes
+	 */
+	public int getNbCongesPayes() {
+		return nbCongesPayes;
+	}
+
+	/**
+	 * Setter
+	 * @param nbCongesPayes the nbCongesPayes to set
+	 */
+	public void setNbCongesPayes(int nbCongesPayes) {
+		this.nbCongesPayes = nbCongesPayes;
+	}
+    
+    
 }
