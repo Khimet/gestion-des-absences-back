@@ -108,12 +108,12 @@
 			</activation>
 			<properties>
 				<jdbc.driver>org.postgresql.Driver</jdbc.driver>
-				<jdbc.url>jdbc:postgresql://ec2-52-31-233-101.eu-west-1.compute.amazonaws.com:5432/d9vgb0okju2ssj</jdbc.url>
-				<jdbc.user>rfgxmyfvhsefqz</jdbc.user>
-				<jdbc.pass>a403604b559b0ea4b80a94cd7a026aa284c46251ad2ce304b857469104e6c591</jdbc.pass>
+				<jdbc.url>jdbc:postgresql://ec2-54-155-22-153.eu-west-1.compute.amazonaws.com:5432/dfdutka8ih0ihu</jdbc.url>
+				<jdbc.user>vxwtsewvglltfa</jdbc.user>
+				<jdbc.pass>e8c6e24269668494e7c11e34fe732b78e4b4be7174c020fc5d5df727d7af9a50</jdbc.pass>
 				<jpa.hibernate.ddl>update</jpa.hibernate.ddl>
 				<jdbc.dialect>org.hibernate.dialect.PostgreSQLDialect</jdbc.dialect>
-				<jdbc.connections.max.active>10</jdbc.connections.max.active>
+				<jdbc.connections.max.active>15</jdbc.connections.max.active>
 				<!-- <app.version>${env.COMMIT_ID}</app.version> -->
 			</properties>
 			<dependencies>
@@ -130,9 +130,9 @@
 			</activation>
 			<properties>
 				<jdbc.driver>org.postgresql.Driver</jdbc.driver>
-				<jdbc.url>jdbc:postgresql://ec2-52-31-233-101.eu-west-1.compute.amazonaws.com:5432/d9vgb0okju2ssj</jdbc.url>
-				<jdbc.user>rfgxmyfvhsefqz</jdbc.user>
-				<jdbc.pass>a403604b559b0ea4b80a94cd7a026aa284c46251ad2ce304b857469104e6c591</jdbc.pass>
+				<jdbc.url>jdbc:postgresql://ec2-54-155-22-153.eu-west-1.compute.amazonaws.com:5432/dfdutka8ih0ihu</jdbc.url>
+				<jdbc.user>vxwtsewvglltfa</jdbc.user>
+				<jdbc.pass>e8c6e24269668494e7c11e34fe732b78e4b4be7174c020fc5d5df727d7af9a50</jdbc.pass>
 				<jpa.hibernate.ddl>create-drop</jpa.hibernate.ddl>
 				<jdbc.dialect>org.hibernate.dialect.PostgreSQLDialect</jdbc.dialect>
 				<jdbc.connections.max.active>5</jdbc.connections.max.active>
