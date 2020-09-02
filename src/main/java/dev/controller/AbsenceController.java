@@ -6,14 +6,14 @@ package dev.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.validation.Valid;
+import java.util.UUID;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.AbsencePostVM;
@@ -29,10 +29,11 @@ import dev.repository.CollegueRepo;
  *
  */
 @RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("absences")
 public class AbsenceController {
 
 	private AbsenceRepo absenceRepo;
-	
 	private CollegueRepo collegueRepo;
 
 
@@ -45,24 +46,35 @@ public class AbsenceController {
 		this.absenceRepo = absenceRepo;
 		this.collegueRepo = collegueRepo;
 	}
-
-
+	
 	public Optional<Collegue> getColConnecte() {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		return this.collegueRepo.findByEmail(email);
 	}
-	
 
-	@GetMapping("/absences")
+	@GetMapping
 	public List<AbsenceVM> getListAbsence() {
-		List<Absence> tmp = this.absenceRepo.findAll();
+
+		Optional<Collegue> col = this.getColConnecte();
+
+		List<Absence> tmp = this.absenceRepo.findAbsences(col.get());
 		List<AbsenceVM> res = new ArrayList<>();
 
 		for (Absence a : tmp) {
-			res.add(new AbsenceVM(a.getDateDebut(), a.getDateFin(), a.getType(), a.getStatus()));
+			res.add(new AbsenceVM(a.getUuid(), a.getDateDebut(), a.getDateFin(), a.getType(), a.getStatus()));
 		}
 		return res;
 	}
+	
+	@DeleteMapping("{uuid}")
+	public void supprAbsence(@PathVariable UUID uuid) {
+		
+		Optional<Collegue> col = this.getColConnecte();
+		this.absenceRepo.deleteAbs(uuid, col.get());
+	}
+
+
+
 
 	@PostMapping("/absences")
 	public AbsencePostVM newAbsence(@RequestBody @Valid AbsencePostVM newAbsence, BindingResult res) {
