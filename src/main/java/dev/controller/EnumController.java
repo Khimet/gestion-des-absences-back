@@ -29,7 +29,6 @@ public class EnumController {
 	
 	@GetMapping("/typeenum")
     public String[] getTypeEnum() {
-		System.out.println("==================================================================================================");
 		Type[] tabType= Type.values();
 		List<String> tabTypeString = new ArrayList<>() ;
 		for (Type type : tabType) {

@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.controller.vm.AbsencePostVM;
 import dev.controller.vm.AbsenceVM;
 import dev.domain.Absence;
 import dev.domain.Collegue;
+import dev.domain.enumerations.Status;
 import dev.repository.AbsenceRepo;
 import dev.repository.CollegueRepo;
 
@@ -34,6 +36,11 @@ public class AbsenceController {
 	private AbsenceRepo absenceRepo;
 	private CollegueRepo collegueRepo;
 
+
+	/** Constructeur
+	 * @param absenceRepo
+	 * @param collegueRepo
+	 */
 	public AbsenceController(AbsenceRepo absenceRepo, CollegueRepo collegueRepo) {
 		super();
 		this.absenceRepo = absenceRepo;
@@ -66,4 +73,18 @@ public class AbsenceController {
 		this.absenceRepo.deleteAbs(uuid, col.get());
 	}
 
+
+
+
+	@PostMapping("/absences")
+	public AbsencePostVM newAbsence(@RequestBody @Valid AbsencePostVM newAbsence, BindingResult res) {
+		if(res.hasErrors()) {
+			System.out.println("error");
+		}
+		Collegue col = getColConnecte().get();
+		
+		Absence tmp = absenceRepo.save(new Absence(newAbsence.getDateDebut(), newAbsence.getDateFin(), newAbsence.getType(), Status.STATUS_INITIAL, newAbsence.getMotif(), col));
+		AbsencePostVM abspost = new AbsencePostVM(tmp.getDateDebut(), tmp.getDateFin(), tmp.getType(), tmp.getMotif());
+		return abspost;
+	}
 }
