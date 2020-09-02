@@ -28,4 +28,5 @@ public interface AbsenceRepo extends JpaRepository<Absence, UUID>{
 	@Modifying
 	@Query("delete from Absence a where a.uuid = ?1 and a.collegue_abs = ?2")
 	public void deleteAbs(UUID uuid, Collegue col);
+	
 }

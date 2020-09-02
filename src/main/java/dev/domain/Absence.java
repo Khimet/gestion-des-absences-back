@@ -11,7 +11,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import dev.domain.enumerations.Status;
 import dev.domain.enumerations.Type;
@@ -153,14 +152,16 @@ public class Absence {
 		this.motif = motif;
 	}
 
-	/** Getter
+	/**
+	 * Getter
 	 * @return the collegue_abs
 	 */
 	public Collegue getCollegue_abs() {
 		return collegue_abs;
 	}
 
-	/** Setter
+	/**
+	 * Setter
 	 * @param collegue_abs the collegue_abs to set
 	 */
 	public void setCollegue_abs(Collegue collegue_abs) {
