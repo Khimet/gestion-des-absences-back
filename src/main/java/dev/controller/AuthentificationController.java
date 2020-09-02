@@ -1,11 +1,14 @@
 package dev.controller;
 
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.CollegueVM;
+import dev.domain.Collegue;
 import dev.repository.CollegueRepo;
 
 /**
@@ -29,5 +32,10 @@ public class AuthentificationController {
                 .map(CollegueVM::new)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.badRequest().build());
+    }
+    
+    public Optional<Collegue> getColConnecte() {
+    	String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return this.collegueRepo.findByEmail(email);
     }
 }

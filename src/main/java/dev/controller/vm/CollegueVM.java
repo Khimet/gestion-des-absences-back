@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
  */
 public class CollegueVM {
 
+	private long id;
 	private String email;
 	private String nom;
 	private String prenom;
@@ -21,12 +22,21 @@ public class CollegueVM {
 	private int nbCongesPayes;
 
 	public CollegueVM(Collegue col) {
+		this.id = col.getId();
 		this.email = col.getEmail();
 		this.nom = col.getNom();
 		this.prenom = col.getPrenom();
 		this.roles = col.getRoles().stream().map(roleCollegue -> roleCollegue.getRole()).collect(Collectors.toList());
 		this.nbRtt = col.getNbRtt();
 		this.nbCongesPayes = col.getNbCongesPayes();
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getEmail() {

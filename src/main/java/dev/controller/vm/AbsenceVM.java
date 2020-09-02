@@ -4,6 +4,7 @@
 package dev.controller.vm;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import dev.domain.enumerations.Status;
 import dev.domain.enumerations.Type;
@@ -14,6 +15,7 @@ import dev.domain.enumerations.Type;
  */
 public class AbsenceVM {
 
+	private UUID uuid;
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	private Type type;
@@ -23,8 +25,9 @@ public class AbsenceVM {
 		super();
 	}
 
-	public AbsenceVM(LocalDate dateDebut, LocalDate dateFin, Type type, Status status) {
+	public AbsenceVM(UUID uuid, LocalDate dateDebut, LocalDate dateFin, Type type, Status status) {
 		super();
+		this.uuid = uuid;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.type = type;
@@ -94,6 +97,20 @@ public class AbsenceVM {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
-	
+
+	/**
+	 * Getter
+	 * @return the uuid
+	 */
+	public UUID getUuid() {
+		return uuid;
+	}
+
+	/**
+	 * Setter
+	 * @param uuid the uuid to set
+	 */
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
+	}
 }
