@@ -20,18 +20,20 @@ public class AbsenceVM {
 	private LocalDate dateFin;
 	private Type type;
 	private Status status;
+	private String motif;
 	
 	public AbsenceVM() {
 		super();
 	}
 
-	public AbsenceVM(UUID uuid, LocalDate dateDebut, LocalDate dateFin, Type type, Status status) {
+	public AbsenceVM(UUID uuid, LocalDate dateDebut, LocalDate dateFin, Type type, Status status, String motif) {
 		super();
 		this.uuid = uuid;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.type = type;
 		this.status = status;
+		this.motif = motif;
 	}
 
 	/**
@@ -113,4 +115,22 @@ public class AbsenceVM {
 	public void setUuid(UUID uuid) {
 		this.uuid = uuid;
 	}
+
+	/**
+	 * Getter
+	 * @return the motif
+	 */
+	public String getMotif() {
+		return motif;
+	}
+
+	/**
+	 * Setter
+	 * @param motif the motif to set
+	 */
+	public void setMotif(String motif) {
+		this.motif = motif;
+	}
+	
+	
 }
