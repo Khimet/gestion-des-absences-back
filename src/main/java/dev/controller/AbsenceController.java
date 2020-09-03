@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ import dev.repository.AbsenceRepo;
  *
  */
 @RestController
+@RequestMapping("absence")
 public class AbsenceController {
 
 	private AbsenceRepo absenceRepo;
@@ -30,7 +32,7 @@ public class AbsenceController {
 		this.absenceRepo = absenceRepo;
 	}
 	
-	@GetMapping("/absences")
+	@GetMapping
 	public List<AbsenceVM> getListAbsence() {
 		List<Absence> tmp = this.absenceRepo.findAll();
 		List<AbsenceVM> res = new ArrayList<>();
@@ -40,7 +42,8 @@ public class AbsenceController {
 		}
 		return res;
 	}
-	@GetMapping
+	
+	@GetMapping("/test")
     public ResponseEntity<?> GetJourFerieRttMoisAnnee(
             @RequestParam("mois") Integer mois,
             @RequestParam("annee") Integer annee){
@@ -53,8 +56,8 @@ public class AbsenceController {
         
         List<AbsenceVM> resultatsAbs = new ArrayList<>();
         
-        absence.forEach(j -> {
-            resultatsAbs.add(new AbsenceVM(j));
+        absence.forEach(abs -> {
+            resultatsAbs.add(new AbsenceVM(abs));
         });
         
         return ResponseEntity.status(HttpStatus.OK).body(resultatsAbs);

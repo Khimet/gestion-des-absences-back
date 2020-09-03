@@ -40,6 +40,20 @@ public class AbsenceVM {
 	}
 
 
+	/** Getter
+	 * @return the motif
+	 */
+	public String getMotif() {
+		return motif;
+	}
+
+	/** Setter
+	 * @param motif the motif to set
+	 */
+	public void setMotif(String motif) {
+		this.motif = motif;
+	}
+
 	/**
 	 * Getter
 	 * @return the dateDebut
