@@ -5,6 +5,7 @@ package dev.controller.vm;
 
 import java.time.LocalDate;
 
+import dev.domain.Absence;
 import dev.domain.enumerations.Status;
 import dev.domain.enumerations.Type;
 
@@ -18,6 +19,7 @@ public class AbsenceVM {
 	private LocalDate dateFin;
 	private Type type;
 	private Status status;
+	private String motif;
 	
 	public AbsenceVM() {
 		super();
@@ -30,6 +32,13 @@ public class AbsenceVM {
 		this.type = type;
 		this.status = status;
 	}
+
+	public AbsenceVM(Absence abs) {
+		this.dateDebut = abs.getDateDebut();
+		this.dateFin= abs.getDateFin();
+		this.motif = abs.getMotif();
+	}
+
 
 	/**
 	 * Getter
