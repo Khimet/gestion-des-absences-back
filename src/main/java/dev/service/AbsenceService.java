@@ -51,7 +51,7 @@ public class AbsenceService extends LogService{
 			}
 			return res;
 		}
-		throw new RuntimeException("Error find absence");
+		throw new RuntimeException("Error col non connecté -  find absence");
 	}
 
 	public void deleteAbs(UUID uuid) {
@@ -59,7 +59,7 @@ public class AbsenceService extends LogService{
 		if (col.isPresent()) {
 			this.absenceRepo.deleteAbs(uuid, col.get());
 		} else {
-			throw new RuntimeException("Error delete absence");
+			throw new RuntimeException("Error col non connecté - delete absence");
 		}
 	}
 
@@ -73,6 +73,6 @@ public class AbsenceService extends LogService{
 					tmp.getMotif());
 			return abspost;
 		}
-		throw new RuntimeException("Error save absence");
+		throw new RuntimeException("Error col non connecté -  save absence");
 	}
 }
