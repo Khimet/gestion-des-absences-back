@@ -3,9 +3,9 @@
  */
 package dev.controller;
 
-import dev.controller.vm.JourFerieRttVM;
+import dev.controller.vm.JFerieRttVM;
 import dev.domain.JourFerieRtt;
-import dev.repository.JourFerieRttRepo;
+import dev.repository.JFerieRttRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-@RequestMapping("jour_ferie_rtt")
-public class JourFerieRttController {
+@RequestMapping("jferiesrtt")
+public class JFerieRttController {
 
-	private JourFerieRttRepo jourFerieRttRepo;
+	private JFerieRttRepo jourFerieRttRepo;
 	
-	public JourFerieRttController(JourFerieRttRepo jourFerieRttRepo) {
+	public JFerieRttController(JFerieRttRepo jourFerieRttRepo) {
 			super();
 			this.jourFerieRttRepo = jourFerieRttRepo;
 			
@@ -44,10 +44,10 @@ public class JourFerieRttController {
         
         List<JourFerieRtt> joursFeriesRtts = jourFerieRttRepo.findJourFerieRttMoisAnnee(mois, annee);
         
-        List<JourFerieRttVM> resultats = new ArrayList<>();
+        List<JFerieRttVM> resultats = new ArrayList<>();
         
         joursFeriesRtts.forEach(j -> {
-            resultats.add(new JourFerieRttVM(j));
+            resultats.add(new JFerieRttVM(j));
             
         });
         

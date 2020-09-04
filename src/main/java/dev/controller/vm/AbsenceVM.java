@@ -35,8 +35,9 @@ public class AbsenceVM {
 
 	public AbsenceVM(Absence abs) {
 		this.dateDebut = abs.getDateDebut();
-		this.dateFin= abs.getDateFin();
-		this.motif = abs.getMotif();
+		this.dateFin = abs.getDateFin();
+		this.type = abs.getType();
+		this.status = abs.getStatus();
 	}
 
 

@@ -43,8 +43,8 @@ public class AbsenceController {
 		return res;
 	}
 	
-	@GetMapping("/test")
-    public ResponseEntity<?> GetJourFerieRttMoisAnnee(
+	@GetMapping("ma")
+    public ResponseEntity<?> getListAbsenceMoisAnnee(
             @RequestParam("mois") Integer mois,
             @RequestParam("annee") Integer annee){
         

@@ -12,7 +12,7 @@ import dev.domain.enumerations.TypeFerieRtt;
  * @author vokankocak
  *
  */
-public class JourFerieRttVM {
+public class JFerieRttVM {
 	
 	private LocalDate date;
 	private TypeFerieRtt type;
@@ -25,7 +25,7 @@ public class JourFerieRttVM {
 	 * @param date
 	 * @param type
 	 */
-	public JourFerieRttVM(JourFerieRtt jfr) {
+	public JFerieRttVM(JourFerieRtt jfr) {
         this.date = jfr.getDate();
         this.type = jfr.getType();
         this.commentaire = jfr.getCommentaire();
