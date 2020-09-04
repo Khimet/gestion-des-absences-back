@@ -6,6 +6,7 @@ package dev.controller.vm;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import dev.domain.Absence;
 import dev.domain.enumerations.Status;
 import dev.domain.enumerations.Type;
 
@@ -33,6 +34,28 @@ public class AbsenceVM {
 		this.dateFin = dateFin;
 		this.type = type;
 		this.status = status;
+		this.motif = motif;
+	}
+
+	public AbsenceVM(Absence abs) {
+		this.dateDebut = abs.getDateDebut();
+		this.dateFin = abs.getDateFin();
+		this.type = abs.getType();
+		this.status = abs.getStatus();
+	}
+
+
+	/** Getter
+	 * @return the motif
+	 */
+	public String getMotif() {
+		return motif;
+	}
+
+	/** Setter
+	 * @param motif the motif to set
+	 */
+	public void setMotif(String motif) {
 		this.motif = motif;
 	}
 
@@ -115,22 +138,4 @@ public class AbsenceVM {
 	public void setUuid(UUID uuid) {
 		this.uuid = uuid;
 	}
-
-	/**
-	 * Getter
-	 * @return the motif
-	 */
-	public String getMotif() {
-		return motif;
-	}
-
-	/**
-	 * Setter
-	 * @param motif the motif to set
-	 */
-	public void setMotif(String motif) {
-		this.motif = motif;
-	}
-	
-	
 }

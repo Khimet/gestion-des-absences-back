@@ -26,7 +26,7 @@ import dev.repository.CollegueRepo;
  */
 @Service
 @Transactional
-public class AbsenceService extends LogService{
+public class AbsenceService extends LogService {
 
 	private AbsenceRepo absenceRepo;
 
@@ -34,7 +34,6 @@ public class AbsenceService extends LogService{
 		super(collegueRepo);
 		this.absenceRepo = absenceRepo;
 	}
-
 
 	public List<AbsenceVM> findAbsences() {
 
@@ -74,5 +73,16 @@ public class AbsenceService extends LogService{
 			return abspost;
 		}
 		throw new RuntimeException("Error col non connecté -  save absence");
+	}
+
+	public List<AbsenceVM> findAbsenceMoisAnnee(int mois, int annee){
+		
+		List<Absence> tmp = this.absenceRepo.findAbsenceMoisAnnee(mois, annee);
+		List<AbsenceVM> resultatsAbs = new ArrayList<>();
+     
+	    tmp.forEach(abs -> {
+	         resultatsAbs.add(new AbsenceVM(abs));
+	    });
+	    return resultatsAbs;
 	}
 }

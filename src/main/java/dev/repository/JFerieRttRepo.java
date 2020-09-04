@@ -12,10 +12,13 @@ import org.springframework.data.jpa.repository.Query;
 import dev.domain.JFerieRtt;
 
 /**
- * @author robin
+ * @author vokankocak
  *
  */
 public interface JFerieRttRepo extends JpaRepository<JFerieRtt, Integer>{
+	
+	@Query("select j from JFerieRtt j where EXTRACT (MONTH FROM j.date) = ?1 and EXTRACT (YEAR FROM j.date)=?2")
+	List<JFerieRtt> findJourFerieRttMoisAnnee(int mois, int annee);
 	
 	@Query("select j.date from JFerieRtt j")
 	public List<LocalDate> findAllDate();

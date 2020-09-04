@@ -1,6 +1,3 @@
-/**
- * 
- */
 package dev.controller;
 
 import java.util.List;
@@ -38,5 +35,6 @@ public class JFerieRttController {
 	@GetMapping("{annee}")
 	public List<JFerieRttVM> getAllJFerieRtt(@PathVariable String annee){
 		return jFerieRttService.getListJFerieRtt(annee);
+
 	}
 }

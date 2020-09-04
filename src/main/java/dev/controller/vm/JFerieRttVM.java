@@ -7,10 +7,7 @@ import java.time.LocalDate;
 
 import dev.domain.enumerations.TypeFerieRtt;
 
-/**
- * @author robin
- *
- */
+
 public class JFerieRttVM {
 	
 	private int id;
@@ -19,10 +16,32 @@ public class JFerieRttVM {
 	private String jour;
 	private String commentaire;
 	
+	/** Constructeur
+	 * 
+	 */
 	public JFerieRttVM() {
 		super();
 	}
 	
+	/** Constructeur
+	 * @param date
+	 * @param type
+	 * @param commentaire
+	 */
+	public JFerieRttVM(LocalDate date, TypeFerieRtt type, String commentaire) {
+		super();
+		this.date = date;
+		this.type = type;
+		this.commentaire = commentaire;
+	}
+
+	/** Constructeur
+	 * @param id
+	 * @param date
+	 * @param type
+	 * @param jour
+	 * @param commentaire
+	 */
 	public JFerieRttVM(int id, LocalDate date, TypeFerieRtt type, String jour, String commentaire) {
 		super();
 		this.id = id;
@@ -31,76 +50,71 @@ public class JFerieRttVM {
 		this.jour = jour;
 		this.commentaire = commentaire;
 	}
-	
-	/**
-	 * Getter
+
+	/** Getter
 	 * @return the id
 	 */
 	public int getId() {
 		return id;
 	}
 
-	/**
-	 * Setter
+	/** Setter
 	 * @param id the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	/**
-	 * Getter
+	/** Getter
 	 * @return the date
 	 */
 	public LocalDate getDate() {
 		return date;
 	}
-	/**
-	 * Setter
+
+	/** Setter
 	 * @param date the date to set
 	 */
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	/**
-	 * Getter
+
+	/** Getter
 	 * @return the type
 	 */
 	public TypeFerieRtt getType() {
 		return type;
 	}
-	/**
-	 * Setter
+
+	/** Setter
 	 * @param type the type to set
 	 */
 	public void setType(TypeFerieRtt type) {
 		this.type = type;
 	}
-	/**
-	 * Getter
+
+	/** Getter
 	 * @return the jour
 	 */
 	public String getJour() {
 		return jour;
 	}
 
-	/**
-	 * Setter
+	/** Setter
 	 * @param jour the jour to set
 	 */
 	public void setJour(String jour) {
 		this.jour = jour;
 	}
 
-	/**
-	 * Getter
+	/** Getter
 	 * @return the commentaire
 	 */
 	public String getCommentaire() {
 		return commentaire;
 	}
-	/**
-	 * Setter
+
+	/** Setter
 	 * @param commentaire the commentaire to set
 	 */
 	public void setCommentaire(String commentaire) {

@@ -27,6 +27,7 @@ public class JFerieRtt {
 	
 	@Enumerated(EnumType.STRING)
 	private TypeFerieRtt type;
+	
 	private String commentaire;
 	
 	public JFerieRtt() {
