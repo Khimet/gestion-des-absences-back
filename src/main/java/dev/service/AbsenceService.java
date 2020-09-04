@@ -52,7 +52,7 @@ public class AbsenceService extends LogService {
 			}
 			return res;
 		}
-		throw new RuntimeException("Error find absence");
+		throw new RuntimeException("Error col non connecté -  find absence");
 	}
 
 	public void deleteAbs(UUID uuid) {
@@ -60,7 +60,7 @@ public class AbsenceService extends LogService {
 		if (col.isPresent()) {
 			this.absenceRepo.deleteAbs(uuid, col.get());
 		} else {
-			throw new RuntimeException("Error delete absence");
+			throw new RuntimeException("Error col non connecté - delete absence");
 		}
 	}
 
@@ -94,7 +94,18 @@ public class AbsenceService extends LogService {
 				return ResponseEntity.status(HttpStatus.OK).body(abspost);
 			}
 
-		}
+		}		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dates se chevauchent");
+	}
+
+	public List<AbsenceVM> findAbsenceMoisAnnee(int mois, int annee){
+		
+		List<Absence> tmp = this.absenceRepo.findAbsenceMoisAnnee(mois, annee);
+		List<AbsenceVM> resultatsAbs = new ArrayList<>();
+     
+	    tmp.forEach(abs -> {
+	         resultatsAbs.add(new AbsenceVM(abs));
+	    });
+	    return resultatsAbs;
 	}
 }
