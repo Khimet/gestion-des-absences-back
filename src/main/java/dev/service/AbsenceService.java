@@ -10,6 +10,8 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import dev.controller.vm.AbsencePostVM;
@@ -26,7 +28,7 @@ import dev.repository.CollegueRepo;
  */
 @Service
 @Transactional
-public class AbsenceService extends LogService{
+public class AbsenceService extends LogService {
 
 	private AbsenceRepo absenceRepo;
 
@@ -34,7 +36,6 @@ public class AbsenceService extends LogService{
 		super(collegueRepo);
 		this.absenceRepo = absenceRepo;
 	}
-
 
 	public List<AbsenceVM> findAbsences() {
 
@@ -63,16 +64,37 @@ public class AbsenceService extends LogService{
 		}
 	}
 
-	public AbsencePostVM saveAbs(AbsencePostVM a) {
+	public ResponseEntity<?> saveAbs(AbsencePostVM absenceNew) {
 		Optional<Collegue> col = getColConnecte();
 		if (col.isPresent()) {
 
-			Absence tmp = absenceRepo.save(new Absence(a.getDateDebut(), a.getDateFin(), a.getType(),
-					Status.STATUS_INITIAL, a.getMotif(), col.get()));
-			AbsencePostVM abspost = new AbsencePostVM(tmp.getDateDebut(), tmp.getDateFin(), tmp.getType(),
-					tmp.getMotif());
-			return abspost;
+			List<Absence> listOldAbsence = this.absenceRepo.findAbsences(col.get());
+			boolean valide = true;
+
+			for (Absence absenceOld : listOldAbsence) {
+
+				if (absenceNew.getDateFin().isBefore(absenceOld.getDateDebut())
+						|| absenceNew.getDateDebut().isAfter(absenceOld.getDateFin())) {
+
+					System.out.println(" SAVE " + absenceNew.getDateFin() + " < " + absenceOld.getDateDebut() + " - "
+							+ absenceNew.getDateDebut() + " > " + absenceOld.getDateFin());
+				} else {
+					valide = false;
+					System.out.println(" NON " + absenceNew.getDateFin() + " < " + absenceOld.getDateDebut() + " - "
+							+ absenceNew.getDateDebut() + " > " + absenceOld.getDateFin());
+				}
+			}
+
+			if (valide) {
+				Absence tmp = absenceRepo.save(new Absence(absenceNew.getDateDebut(), absenceNew.getDateFin(),
+						absenceNew.getType(), Status.STATUS_INITIAL, absenceNew.getMotif(), col.get()));
+				AbsencePostVM abspost = new AbsencePostVM(tmp.getDateDebut(), tmp.getDateFin(), tmp.getType(),
+						tmp.getMotif());
+
+				return ResponseEntity.status(HttpStatus.OK).body(abspost);
+			}
+
 		}
-		throw new RuntimeException("Error save absence");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dates se chevauchent");
 	}
 }

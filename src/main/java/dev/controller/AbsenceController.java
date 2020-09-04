@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,10 +55,7 @@ public class AbsenceController {
 	}
 
 	@PostMapping
-	public AbsencePostVM newAbsence(@RequestBody @Valid AbsencePostVM newAbs, BindingResult res) {
-		if(res.hasErrors()) {
-			throw new RuntimeException("Données incorrects pour post absence");
-		}	
+	public ResponseEntity<?> newAbsence(@RequestBody @Valid AbsencePostVM newAbs, BindingResult res) { 
 		return this.absenceService.saveAbs(newAbs);
 	}
 }
