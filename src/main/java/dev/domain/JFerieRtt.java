@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import dev.domain.enumerations.TypeFerieRtt;
 
@@ -16,8 +17,9 @@ import dev.domain.enumerations.TypeFerieRtt;
  * @author robin
  *
  */
+@Table(name="jour_ferie_rtt")
 @Entity
-public class JourFerieRtt {
+public class JFerieRtt {
 	
 	@Id
 	private int id;
@@ -28,16 +30,26 @@ public class JourFerieRtt {
 	
 	private String commentaire;
 	
-	public JourFerieRtt() {
+	public JFerieRtt() {
 		super();
 	}
 	
-	public JourFerieRtt(LocalDate date, TypeFerieRtt type, String commentaire) {
+	public JFerieRtt(LocalDate date, TypeFerieRtt type, String commentaire) {
 		super();
 		this.date = date;
 		this.type = type;
 		this.commentaire = commentaire;
 	}
+	
+	
+	/**
+	 * Getter
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
 	/**
 	 * Getter
 	 * @return the date
@@ -80,8 +92,4 @@ public class JourFerieRtt {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
-	
-
-
-	
 }
