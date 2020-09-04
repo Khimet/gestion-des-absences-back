@@ -73,15 +73,10 @@ public class AbsenceService extends LogService {
 
 			for (Absence absenceOld : listOldAbsence) {
 
-				if (absenceNew.getDateFin().isBefore(absenceOld.getDateDebut())
-						|| absenceNew.getDateDebut().isAfter(absenceOld.getDateFin())) {
+				if (!(absenceNew.getDateFin().isBefore(absenceOld.getDateDebut())
+						|| absenceNew.getDateDebut().isAfter(absenceOld.getDateFin()))) {
 
-					System.out.println(" SAVE " + absenceNew.getDateFin() + " < " + absenceOld.getDateDebut() + " - "
-							+ absenceNew.getDateDebut() + " > " + absenceOld.getDateFin());
-				} else {
 					valide = false;
-					System.out.println(" NON " + absenceNew.getDateFin() + " < " + absenceOld.getDateDebut() + " - "
-							+ absenceNew.getDateDebut() + " > " + absenceOld.getDateFin());
 				}
 			}
 
