@@ -1,42 +1,60 @@
 /**
  * 
  */
-package dev.domain;
+package dev.controller.vm;
 
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-
+import dev.domain.JFerieRtt;
 import dev.domain.enumerations.TypeFerieRtt;
 
 /**
  * @author robin
  *
  */
-@Entity
-public class JourFerieRtt {
+public class JFerieRttVM {
 	
-	@Id
 	private int id;
 	private LocalDate date;
-	
-	@Enumerated(EnumType.STRING)
 	private TypeFerieRtt type;
+	private String jour;
 	private String commentaire;
 	
-	public JourFerieRtt() {
+	public JFerieRttVM() {
 		super();
 	}
 	
-	public JourFerieRtt(LocalDate date, TypeFerieRtt type, String commentaire) {
+	public JFerieRttVM(int id, LocalDate date, TypeFerieRtt type, String jour, String commentaire) {
 		super();
+		this.id = id;
 		this.date = date;
 		this.type = type;
+		this.jour = jour;
 		this.commentaire = commentaire;
 	}
+	
+	public JFerieRttVM(JFerieRtt jfr) {
+		this.date = jfr.getDate();
+		this.type = jfr.getType();
+		this.commentaire = jfr.getCommentaire();
+	}
+	
+	/**
+	 * Getter
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * Setter
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	/**
 	 * Getter
 	 * @return the date
@@ -67,6 +85,22 @@ public class JourFerieRtt {
 	}
 	/**
 	 * Getter
+	 * @return the jour
+	 */
+	public String getJour() {
+		return jour;
+	}
+
+	/**
+	 * Setter
+	 * @param jour the jour to set
+	 */
+	public void setJour(String jour) {
+		this.jour = jour;
+	}
+
+	/**
+	 * Getter
 	 * @return the commentaire
 	 */
 	public String getCommentaire() {
@@ -79,8 +113,4 @@ public class JourFerieRtt {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
-	
-
-
-	
 }

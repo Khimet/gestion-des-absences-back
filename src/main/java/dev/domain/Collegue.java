@@ -1,6 +1,10 @@
 package dev.domain;
 
 import javax.persistence.*;
+
+import dev.domain.enumerations.Departement;
+import dev.domain.enumerations.Role;
+
 import java.util.List;
 
 @Entity
@@ -27,6 +31,9 @@ public class Collegue {
     private int nbRtt;
    
     private int nbCongesPayes;
+    
+    @Enumerated(EnumType.STRING)
+    private Departement departement;
     
     public Collegue() {
 		super();
@@ -140,6 +147,20 @@ public class Collegue {
 	 */
 	public void setNbCongesPayes(int nbCongesPayes) {
 		this.nbCongesPayes = nbCongesPayes;
+	}
+
+	/**
+	 * @return the departement
+	 */
+	public Departement getDepartement() {
+		return departement;
+	}
+
+	/**
+	 * @param departement the departement to set
+	 */
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
 	}
     
     

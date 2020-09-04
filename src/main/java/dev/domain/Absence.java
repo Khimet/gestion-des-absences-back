@@ -11,7 +11,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import dev.domain.enumerations.Status;
 import dev.domain.enumerations.Type;
@@ -46,15 +45,15 @@ public class Absence {
 		this.uuid = UUID.randomUUID();
 	}
 
-	public Absence(UUID uuid, LocalDate dateDebut, LocalDate dateFin, Type type, Status status, String motif) {
+	public Absence(LocalDate dateDebut, LocalDate dateFin, Type type, Status status, String motif, Collegue collegue_abs) {
 		super();
-		this.uuid = uuid;
+		this.uuid = UUID.randomUUID();
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.type = type;
 		this.status = status;
 		this.motif = motif;
-		this.uuid = UUID.randomUUID();
+		this.collegue_abs = collegue_abs;
 	}
 
 	/**
@@ -152,6 +151,20 @@ public class Absence {
 	public void setMotif(String motif) {
 		this.motif = motif;
 	}
-	
-	
+
+	/**
+	 * Getter
+	 * @return the collegue_abs
+	 */
+	public Collegue getCollegue_abs() {
+		return collegue_abs;
+	}
+
+	/**
+	 * Setter
+	 * @param collegue_abs the collegue_abs to set
+	 */
+	public void setCollegue_abs(Collegue collegue_abs) {
+		this.collegue_abs = collegue_abs;
+	}
 }
