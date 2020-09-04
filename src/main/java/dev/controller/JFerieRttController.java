@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.controller.vm.JFerieRttVM;
 import dev.domain.JFerieRtt;
 import dev.repository.JFerieRttRepo;
+import dev.service.JFerieRttService;
 
 /**
  * @author khimet
@@ -23,14 +24,14 @@ import dev.repository.JFerieRttRepo;
 @RequestMapping("jourferiertt")
 public class JFerieRttController {
 	
-	private JFerieRttRepo jourFerieRttRepo;
+	private JFerieRttService jourFerieRttService;
 
 	/**
 	 * @param jourFerieRttRepo
 	 */
-	public JFerieRttController(JFerieRttRepo jourFerieRttRepo) {
+	public JFerieRttController(JFerieRttService jourFerieRttService) {
 		super();
-		this.jourFerieRttRepo = jourFerieRttRepo;
+		this.jourFerieRttService = jourFerieRttService;
 	}
 	
 	@GetMapping
@@ -42,15 +43,10 @@ public class JFerieRttController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
 		}
 		
-		List<JFerieRtt> joursFeriesRtts = jourFerieRttRepo.findJourFerieRttMoisAnnee(mois, annee);
+		List<JFerieRttVM> resultat = jourFerieRttService.getJFerieRttMoisAnnee(mois, annee);
 		
-		List<JFerieRttVM> resultats = new ArrayList<>();
 		
-		joursFeriesRtts.forEach(j -> {
-			resultats.add(new JFerieRttVM(j));
-		});
-		
-		return ResponseEntity.status(HttpStatus.OK).body(resultats);
+		return ResponseEntity.status(HttpStatus.OK).body(resultat);
 		
 	}
 	

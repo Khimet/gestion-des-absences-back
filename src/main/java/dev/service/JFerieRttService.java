@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import dev.controller.vm.JFerieRttVM;
 import dev.domain.Collegue;
 import dev.domain.JFerieRtt;
+import dev.domain.RoleCollegue;
+import dev.domain.enumerations.Role;
 import dev.repository.CollegueRepo;
 import dev.repository.JFerieRttRepo;
 
@@ -59,5 +61,25 @@ public class JFerieRttService extends LogService{
 			listJFerieRttVM.add(new JFerieRttVM(j.getId(), j.getDate(), j.getType(), j.getDate().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.FRANCE).toString(), j.getCommentaire()));
 		}
 		return listJFerieRttVM;
+	}
+	
+	public List<JFerieRttVM> getJFerieRttMoisAnnee(int mois, int année){
+		Optional<Collegue> col = this.getColConnecte();
+		
+		if (col.isPresent() && col.get().getRoles().get(0).getRole() == Role.ROLE_MANAGER) {
+			
+			List<JFerieRtt> jFeriesRttsMoisAnnee = jFerieRttRepo.findJourFerieRttMoisAnnee(mois, année);
+			
+			List<JFerieRttVM> resultats = new ArrayList<>();
+			
+			jFeriesRttsMoisAnnee.forEach(j -> {
+				resultats.add(new JFerieRttVM(j));
+			});
+			
+			return resultats;
+			
+		}
+		
+		throw new RuntimeException("Error col non connecté ou vous n'êtes pas un manager et donc vous n'êtes pas autorisé");
 	}
 }

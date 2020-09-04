@@ -14,8 +14,12 @@ import org.springframework.stereotype.Service;
 
 import dev.controller.vm.AbsencePostVM;
 import dev.controller.vm.AbsenceVM;
+import dev.controller.vm.JFerieRttVM;
 import dev.domain.Absence;
 import dev.domain.Collegue;
+import dev.domain.JFerieRtt;
+import dev.domain.enumerations.Departement;
+import dev.domain.enumerations.Role;
 import dev.domain.enumerations.Status;
 import dev.repository.AbsenceRepo;
 import dev.repository.CollegueRepo;
@@ -26,7 +30,7 @@ import dev.repository.CollegueRepo;
  */
 @Service
 @Transactional
-public class AbsenceService extends LogService{
+public class AbsenceService extends LogService {
 
 	private AbsenceRepo absenceRepo;
 
@@ -34,7 +38,6 @@ public class AbsenceService extends LogService{
 		super(collegueRepo);
 		this.absenceRepo = absenceRepo;
 	}
-
 
 	public List<AbsenceVM> findAbsences() {
 
@@ -74,5 +77,26 @@ public class AbsenceService extends LogService{
 			return abspost;
 		}
 		throw new RuntimeException("Error col non connecté -  save absence");
+	}
+
+	public List<AbsenceVM> getAbsencesValideeMoisAnneeDepartement(int mois, int annee, Departement departement) {
+		
+		Optional<Collegue> col = this.getColConnecte();
+		
+		if (col.isPresent() && col.get().getRoles().get(0).getRole() == Role.ROLE_MANAGER) {
+
+			List<Absence> absMoisAnneeDepartement = absenceRepo.findAbsencesValideeMoisAnneeDepartement(mois, annee, departement);
+			
+			List<AbsenceVM> resultat = new ArrayList<>();
+
+			absMoisAnneeDepartement.forEach(a -> {
+				resultat.add(new AbsenceVM(a));
+			});
+
+			return resultat;
+
+		}
+		
+		throw new RuntimeException("Error col non connecté ou vous n'êtes pas un manager et donc vous n'êtes pas autorisé");
 	}
 }

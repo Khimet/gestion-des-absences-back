@@ -8,6 +8,8 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,10 +18,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.AbsencePostVM;
 import dev.controller.vm.AbsenceVM;
+import dev.controller.vm.JFerieRttVM;
+import dev.domain.enumerations.Departement;
 import dev.service.AbsenceService;
 
 /**
@@ -59,5 +64,22 @@ public class AbsenceController {
 			throw new RuntimeException("Données incorrects pour post absence");
 		}	
 		return this.absenceService.saveAbs(newAbs);
+	}
+	
+	@GetMapping("vmad")
+	public ResponseEntity<?> GetAbsValideeMoisAnneeDepartement(
+			@RequestParam("mois") Integer mois,
+			@RequestParam("annee") Integer annee,
+			@RequestParam("departement") Departement departement){
+		
+		if ( mois == null || annee == null || departement == null || mois <= 0 || annee <= 0) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+		}
+		
+		List<AbsenceVM> resultat = absenceService.getAbsencesValideeMoisAnneeDepartement(mois, annee, departement);
+		
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resultat);
+		
 	}
 }

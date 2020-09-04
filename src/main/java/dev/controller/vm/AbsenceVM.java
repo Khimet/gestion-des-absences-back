@@ -6,6 +6,7 @@ package dev.controller.vm;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import dev.domain.Absence;
 import dev.domain.enumerations.Status;
 import dev.domain.enumerations.Type;
 
@@ -21,6 +22,7 @@ public class AbsenceVM {
 	private Type type;
 	private Status status;
 	private String motif;
+	private CollegueVM collegueVM;
 	
 	public AbsenceVM() {
 		super();
@@ -34,6 +36,17 @@ public class AbsenceVM {
 		this.type = type;
 		this.status = status;
 		this.motif = motif;
+	}
+	
+	public AbsenceVM(Absence abs) {
+		super();
+		this.uuid = abs.getUuid();
+		this.dateDebut = abs.getDateDebut();
+		this.dateFin = abs.getDateFin();
+		this.type = abs.getType();
+		this.status = abs.getStatus();
+		this.motif = abs.getMotif();
+		this.collegueVM = new CollegueVM(abs.getCollegue_abs());
 	}
 
 	/**
@@ -130,6 +143,20 @@ public class AbsenceVM {
 	 */
 	public void setMotif(String motif) {
 		this.motif = motif;
+	}
+
+	/**
+	 * @return the collegueVM
+	 */
+	public CollegueVM getCollegueVM() {
+		return collegueVM;
+	}
+
+	/**
+	 * @param collegueVM the collegueVM to set
+	 */
+	public void setCollegueVM(CollegueVM collegueVM) {
+		this.collegueVM = collegueVM;
 	}
 	
 	
