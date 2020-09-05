@@ -2,9 +2,15 @@ package dev.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,12 +35,24 @@ public class JFerieRttController {
 
 	@GetMapping("annees")
 	public List<String> getAllAnnee(){
-		return jFerieRttService.getListAnnee();
+		return this.jFerieRttService.getListAnnee();
 	}
 	
 	@GetMapping("{annee}")
 	public List<JFerieRttVM> getAllJFerieRtt(@PathVariable String annee){
-		return jFerieRttService.getListJFerieRtt(annee);
-
+		return this.jFerieRttService.getListJFerieRtt(annee);
+	}
+	
+	@GetMapping("type")
+	public ResponseEntity<?> getAllType(){
+		return this.jFerieRttService.getListType();
+	}
+	
+	@PostMapping
+	public ResponseEntity<?> ajoutJFerieRtt(@RequestBody @Valid JFerieRttVM newJFerieRtt, BindingResult res){
+		if(res.hasErrors()) {
+			throw new RuntimeException("Données incorrects pour post jour ferie et rtt");
+		}	
+		return this.jFerieRttService.ajoutJFerieRtt(newJFerieRtt);
 	}
 }

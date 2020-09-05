@@ -34,6 +34,14 @@ public class JFerieRttVM {
 		this.type = type;
 		this.commentaire = commentaire;
 	}
+	
+	public JFerieRttVM(int id, LocalDate date, TypeFerieRtt type, String commentaire) {
+		super();
+		this.id = id;
+		this.date = date;
+		this.type = type;
+		this.commentaire = commentaire;
+	}
 
 	/** Constructeur
 	 * @param id

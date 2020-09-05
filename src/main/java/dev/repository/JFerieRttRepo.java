@@ -25,4 +25,7 @@ public interface JFerieRttRepo extends JpaRepository<JFerieRtt, Integer>{
 	
 	@Query("select j from JFerieRtt j where EXTRACT(YEAR FROM j.date) = ?1")
 	public List<JFerieRtt> findAllByAnnee(int annee);
+	
+	@Query("select j.type from JFerieRtt j")
+	public List<String> findAllType();
 }

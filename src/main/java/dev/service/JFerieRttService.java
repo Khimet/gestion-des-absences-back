@@ -9,10 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import dev.controller.vm.JFerieRttVM;
@@ -56,8 +60,28 @@ public class JFerieRttService extends LogService{
 		List<JFerieRttVM> listJFerieRttVM = new ArrayList<>();
 		for(JFerieRtt j : tmp) {
 			
-			listJFerieRttVM.add(new JFerieRttVM(j.getId(), j.getDate(), j.getType(), j.getDate().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.FRANCE).toString(), j.getCommentaire()));
+			listJFerieRttVM.add(new JFerieRttVM(j.getId(), j.getDate(), j.getType(), j.getDate().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.FRANCE), j.getCommentaire()));
 		}
 		return listJFerieRttVM;
+	}
+	
+	public ResponseEntity<?> getListType() {	
+		List<String> tmp = this.jFerieRttRepo.findAllType();
+		List<String> res = new ArrayList<>();
+		if(!tmp.isEmpty()) {
+			res = tmp.stream().distinct().collect(Collectors.toList());
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(res);
+	}
+
+	public ResponseEntity<?> ajoutJFerieRtt(@Valid JFerieRttVM newJFerieRtt) {
+		
+		if ( newJFerieRtt == null || newJFerieRtt.getDate() == null || newJFerieRtt.getType() == null || newJFerieRtt.getCommentaire() == null ) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("erreur, valeurs incorrectes");
+        }
+		
+		JFerieRtt jFerieRtt = this.jFerieRttRepo.save(new JFerieRtt(newJFerieRtt.getDate(), newJFerieRtt.getType(), newJFerieRtt.getCommentaire()));
+		JFerieRttVM res = new JFerieRttVM(jFerieRtt.getId(), jFerieRtt.getDate(), jFerieRtt.getType(), jFerieRtt.getCommentaire());
+		return ResponseEntity.status(HttpStatus.OK).body(res);
 	}
 }
