@@ -4,15 +4,17 @@
 package dev.controller.vm;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import dev.domain.enumerations.TypeFerieRtt;
 
 
 public class JFerieRttVM {
 	
-	private int id;
+	private UUID uuid;
 	private LocalDate date;
 	private TypeFerieRtt type;
+	private boolean valide;
 	private String jour;
 	private String commentaire;
 	
@@ -35,9 +37,9 @@ public class JFerieRttVM {
 		this.commentaire = commentaire;
 	}
 	
-	public JFerieRttVM(int id, LocalDate date, TypeFerieRtt type, String commentaire) {
+	public JFerieRttVM(UUID uuid, LocalDate date, TypeFerieRtt type, String commentaire) {
 		super();
-		this.id = id;
+		this.uuid = uuid;
 		this.date = date;
 		this.type = type;
 		this.commentaire = commentaire;
@@ -50,11 +52,12 @@ public class JFerieRttVM {
 	 * @param jour
 	 * @param commentaire
 	 */
-	public JFerieRttVM(int id, LocalDate date, TypeFerieRtt type, String jour, String commentaire) {
+	public JFerieRttVM(UUID uuid, LocalDate date, TypeFerieRtt type, boolean valide, String jour, String commentaire) {
 		super();
-		this.id = id;
+		this.uuid = uuid;
 		this.date = date;
 		this.type = type;
+		this.valide = valide;
 		this.jour = jour;
 		this.commentaire = commentaire;
 	}
@@ -62,15 +65,15 @@ public class JFerieRttVM {
 	/** Getter
 	 * @return the id
 	 */
-	public int getId() {
-		return id;
+	public UUID getUuid() {
+		return uuid;
 	}
 
 	/** Setter
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
-		this.id = id;
+	public void setId(UUID uuid) {
+		this.uuid = uuid;
 	}
 
 	/** Getter
@@ -99,6 +102,22 @@ public class JFerieRttVM {
 	 */
 	public void setType(TypeFerieRtt type) {
 		this.type = type;
+	}
+
+	/**
+	 * Getter
+	 * @return the valide
+	 */
+	public boolean isValide() {
+		return valide;
+	}
+
+	/**
+	 * Setter
+	 * @param valide the valide to set
+	 */
+	public void setValide(boolean valide) {
+		this.valide = valide;
 	}
 
 	/** Getter

@@ -5,8 +5,10 @@ package dev.repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import dev.domain.JFerieRtt;
@@ -28,4 +30,8 @@ public interface JFerieRttRepo extends JpaRepository<JFerieRtt, Integer>{
 	
 	@Query("select j.type from JFerieRtt j")
 	public List<String> findAllType();
+	
+	@Modifying
+	@Query("delete from JFerieRtt j where j.uuid = ?1")
+	public void deleteByUuid(UUID uuid);
 }
