@@ -63,7 +63,33 @@ public class AbsenceService extends LogService {
 			throw new RuntimeException("Error col non connecté - delete absence");
 		}
 	}
+	
+	public ResponseEntity<?> putAbs(UUID uuid) {
+		Optional<Collegue> col = getColConnecte();
+		if (col.isPresent()) {
+			Optional<Absence> absenceOpt = absenceRepo.findById(uuid);
+			
+			Absence updateAbs = new Absence();
+			
+			updateAbs.setDateDebut(absenceOpt.get().getDateDebut());
+			updateAbs.setDateFin(absenceOpt.get().getDateFin());
+			updateAbs.setType(absenceOpt.get().getType());
+			updateAbs.setMotif(absenceOpt.get().getMotif());
+			updateAbs.setStatus(Status.STATUS_INITIAL);
+						
+			Absence tmp = absenceRepo.save(updateAbs);
+			AbsencePostVM absUp = new AbsencePostVM(tmp.getDateDebut(), tmp.getDateFin(), tmp.getType(),
+					tmp.getMotif());
+			
+			return ResponseEntity.status(HttpStatus.OK).body(absUp);
+					
 
+		}
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("erreur");
+		
+		
+	}
 	public ResponseEntity<?> saveAbs(AbsencePostVM absenceNew) {
 		Optional<Collegue> col = getColConnecte();
 		if (col.isPresent()) {
