@@ -82,4 +82,18 @@ public class AbsenceController {
 		return ResponseEntity.status(HttpStatus.OK).body(resultat);
 		
 	}
+	
+	@GetMapping("ma")
+    public ResponseEntity<?> getListAbsenceMoisAnnee(
+            @RequestParam("mois") Integer mois,
+            @RequestParam("annee") Integer annee){
+        
+        if ( mois == null || annee == null || mois < 0 || annee <= 0 ) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+        }
+        
+        List<AbsenceVM> absence = absenceService.findAbsenceMoisAnnee(mois, annee);
+       
+        return ResponseEntity.status(HttpStatus.OK).body(absence);
+    }
 }

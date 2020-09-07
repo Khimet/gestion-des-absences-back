@@ -79,14 +79,26 @@ public class AbsenceService extends LogService {
 		throw new RuntimeException("Error col non connecté -  save absence");
 	}
 
+	public List<AbsenceVM> findAbsenceMoisAnnee(int mois, int annee) {
+
+		List<Absence> tmp = this.absenceRepo.findAbsenceMoisAnnee(mois, annee);
+		List<AbsenceVM> resultatsAbs = new ArrayList<>();
+
+		tmp.forEach(abs -> {
+			resultatsAbs.add(new AbsenceVM(abs));
+		});
+		return resultatsAbs;
+	}
+
 	public List<AbsenceVM> getAbsencesValideeMoisAnneeDepartement(int mois, int annee, Departement departement) {
-		
+
 		Optional<Collegue> col = this.getColConnecte();
-		
+
 		if (col.isPresent() && col.get().getRoles().get(0).getRole() == Role.ROLE_MANAGER) {
 
-			List<Absence> absMoisAnneeDepartement = absenceRepo.findAbsencesValideeMoisAnneeDepartement(mois, annee, departement);
-			
+			List<Absence> absMoisAnneeDepartement = absenceRepo.findAbsencesValideeMoisAnneeDepartement(mois, annee,
+					departement);
+
 			List<AbsenceVM> resultat = new ArrayList<>();
 
 			absMoisAnneeDepartement.forEach(a -> {
@@ -96,7 +108,8 @@ public class AbsenceService extends LogService {
 			return resultat;
 
 		}
-		
-		throw new RuntimeException("Error col non connecté ou vous n'êtes pas un manager et donc vous n'êtes pas autorisé");
+
+		throw new RuntimeException(
+				"Error col non connecté ou vous n'êtes pas un manager et donc vous n'êtes pas autorisé");
 	}
 }

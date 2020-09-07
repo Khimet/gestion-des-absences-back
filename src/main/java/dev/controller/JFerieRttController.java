@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,17 +23,18 @@ import dev.service.JFerieRttService;
  *
  */
 @RestController
-@RequestMapping("jourferiertt")
+@CrossOrigin(origins = "*")
+@RequestMapping("jferiestt")
 public class JFerieRttController {
 	
-	private JFerieRttService jourFerieRttService;
+	private JFerieRttService jFerieRttService;
 
 	/**
 	 * @param jourFerieRttRepo
 	 */
 	public JFerieRttController(JFerieRttService jourFerieRttService) {
 		super();
-		this.jourFerieRttService = jourFerieRttService;
+		this.jFerieRttService = jFerieRttService;
 	}
 	
 	@GetMapping
@@ -43,12 +46,25 @@ public class JFerieRttController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
 		}
 		
-		List<JFerieRttVM> resultat = jourFerieRttService.getJFerieRttMoisAnnee(mois, annee);
+		List<JFerieRttVM> resultat = jFerieRttService.getJFerieRttMoisAnnee(mois, annee);
 		
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resultat);
 		
 	}
+	
+	@GetMapping("annees")
+	public List<String> getAllAnnee(){
+		return jFerieRttService.getListAnnee();
+	}
+	
+	@GetMapping("{annee}")
+	public List<JFerieRttVM> getAllJFerieRtt(@PathVariable String annee){
+		return jFerieRttService.getListJFerieRtt(annee);
+
+	}
+	
+	
 	
 	
 	

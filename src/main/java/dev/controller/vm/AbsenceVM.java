@@ -38,6 +38,7 @@ public class AbsenceVM {
 		this.motif = motif;
 	}
 	
+	
 	public AbsenceVM(Absence abs) {
 		super();
 		this.uuid = abs.getUuid();
