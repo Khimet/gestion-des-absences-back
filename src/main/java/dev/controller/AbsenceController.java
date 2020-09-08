@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.controller.vm.AbsencePostVM;
 import dev.controller.vm.AbsenceVM;
 import dev.service.AbsenceService;
 
@@ -57,11 +57,13 @@ public class AbsenceController {
 	}
 
 	@PostMapping
-	public AbsencePostVM newAbsence(@RequestBody @Valid AbsencePostVM newAbs, BindingResult res) {
-		if(res.hasErrors()) {
-			throw new RuntimeException("Données incorrects pour post absence");
-		}	
+	public ResponseEntity<?> newAbsence(@RequestBody @Valid AbsenceVM newAbs, BindingResult res) { 
 		return this.absenceService.saveAbs(newAbs);
+	}
+	
+	@PatchMapping
+	public ResponseEntity<?> replaceAbsence(@RequestBody AbsenceVM updateAbs) {
+		return this.absenceService.patchAbs(updateAbs);
 	}
 	
 	@GetMapping("ma")
