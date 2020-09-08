@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import dev.domain.JFerieRtt;
+import dev.domain.enumerations.TypeFerieRtt;
 
 /**
  * @author vokankocak
@@ -34,4 +35,8 @@ public interface JFerieRttRepo extends JpaRepository<JFerieRtt, Integer>{
 	@Modifying
 	@Query("delete from JFerieRtt j where j.uuid = ?1")
 	public void deleteByUuid(UUID uuid);
+	
+	@Modifying
+	@Query("update JFerieRtt j set j.date = ?1, j.type = ?2, j.commentaire = ?3 where j.uuid = ?4")
+	public void updateJFerieRtt (LocalDate date, TypeFerieRtt type, String commentaire, UUID uuid);
 }

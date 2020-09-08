@@ -63,22 +63,11 @@ public class JFerieRttService extends LogService {
 		List<JFerieRttVM> listJFerieRttVM = new ArrayList<>();
 		for (JFerieRtt j : tmp) {
 
-			listJFerieRttVM.add(new JFerieRttVM(j.getUuid(), j.getDate(), j.getType(), j.isValide() ,
+			listJFerieRttVM.add(new JFerieRttVM(j.getUuid(), j.getDate(), j.getType(), j.isValide(),
 					j.getDate().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.FRANCE), j.getCommentaire()));
 		}
 		return listJFerieRttVM;
 	}
-
-	/* ne sert plus mais je garde ça de côté
-	public ResponseEntity<?> getListType() {
-		List<String> tmp = this.jFerieRttRepo.findAllType();
-		List<String> res = new ArrayList<>();
-		if (!tmp.isEmpty()) {
-			res = tmp.stream().distinct().collect(Collectors.toList());
-		}
-		return ResponseEntity.status(HttpStatus.OK).body(res);
-	}
-	*/
 
 	public ResponseEntity<?> ajoutJFerieRtt(@Valid JFerieRttVM newJFerieRtt) {
 
@@ -89,10 +78,14 @@ public class JFerieRttService extends LogService {
 
 		List<JFerieRtt> tmp = this.jFerieRttRepo.findAll();
 		boolean existeDeja = false;
-
+		
+		
 		for (JFerieRtt j : tmp) {
-			if (newJFerieRtt.getDate() == j.getDate()) {
+			System.out.println(newJFerieRtt.getDate() + " " + j.getDate());
+			System.out.println(j.getUuid() + " " + newJFerieRtt.getUuid());
+			if (newJFerieRtt.getDate().equals(j.getDate())) {
 				existeDeja = true;
+				System.out.println(existeDeja);
 			}
 		}
 
@@ -107,9 +100,34 @@ public class JFerieRttService extends LogService {
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ce jour existe déjà dans la bdd");
 	}
-	
-	public ResponseEntity<?> deleteJFerieRtt(UUID uuid){
+
+	public ResponseEntity<?> deleteJFerieRtt(UUID uuid) {
 		this.jFerieRttRepo.deleteByUuid(uuid);
 		return ResponseEntity.status(HttpStatus.OK).body("");
+	}
+
+	public ResponseEntity<?> updateJFerieRtt(@Valid JFerieRttVM modifJFerieRtt) {
+
+		if (modifJFerieRtt == null || modifJFerieRtt.getDate() == null || modifJFerieRtt.getType() == null
+				|| modifJFerieRtt.getCommentaire() == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("erreur, valeurs incorrectes");
+		}
+		
+		List<JFerieRtt> tmp = this.jFerieRttRepo.findAll();
+		boolean existeDeja = false;
+		
+		
+		for (JFerieRtt j : tmp) {
+			if ((modifJFerieRtt.getDate().equals(j.getDate())) && !(j.getUuid().equals(modifJFerieRtt.getUuid()))) {
+				existeDeja = true;
+			}
+		}
+		
+		if (!existeDeja) {
+			this.jFerieRttRepo.updateJFerieRtt(modifJFerieRtt.getDate(), modifJFerieRtt.getType(), modifJFerieRtt.getCommentaire(), modifJFerieRtt.getUuid());
+			return ResponseEntity.status(HttpStatus.OK).body(modifJFerieRtt);
+		}
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ce jour existe déjà dans la bdd");
 	}
 }
