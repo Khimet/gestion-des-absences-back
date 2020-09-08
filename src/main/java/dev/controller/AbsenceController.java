@@ -79,4 +79,8 @@ public class AbsenceController {
        
         return ResponseEntity.status(HttpStatus.OK).body(absence);
     }
+	
+	// TODO
+	// @GetMapping("par-role")
+	// public ResponseEntity<?> getListAbsenceParRole(){}
 }

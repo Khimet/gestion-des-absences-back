@@ -5,11 +5,14 @@ package dev.repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import dev.domain.JFerieRtt;
+import dev.domain.enumerations.TypeFerieRtt;
 
 /**
  * @author vokankocak
@@ -25,4 +28,15 @@ public interface JFerieRttRepo extends JpaRepository<JFerieRtt, Integer>{
 	
 	@Query("select j from JFerieRtt j where EXTRACT(YEAR FROM j.date) = ?1")
 	public List<JFerieRtt> findAllByAnnee(int annee);
+	
+	@Query("select j.type from JFerieRtt j")
+	public List<String> findAllType();
+	
+	@Modifying
+	@Query("delete from JFerieRtt j where j.uuid = ?1")
+	public void deleteByUuid(UUID uuid);
+	
+	@Modifying
+	@Query("update JFerieRtt j set j.date = ?1, j.type = ?2, j.commentaire = ?3 where j.uuid = ?4")
+	public void updateJFerieRtt (LocalDate date, TypeFerieRtt type, String commentaire, UUID uuid);
 }
