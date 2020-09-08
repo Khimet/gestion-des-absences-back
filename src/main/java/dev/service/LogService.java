@@ -27,4 +27,8 @@ public abstract class LogService {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		return this.collegueRepo.findByEmail(email);
 	}
+	
+	public CollegueRepo getColRepo() {
+		return collegueRepo;
+	}
 }

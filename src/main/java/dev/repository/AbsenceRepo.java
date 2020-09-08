@@ -7,16 +7,17 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import dev.controller.vm.AbsenceVM;
+import dev.controller.vm.ValidationVM;
 import dev.domain.Absence;
 import dev.domain.Collegue;
-import dev.domain.enumerations.Type;
 import dev.domain.enumerations.Departement;
+import dev.domain.enumerations.Status;
+import dev.domain.enumerations.Type;
 
 /**
  * @author robin
@@ -40,4 +41,14 @@ public interface AbsenceRepo extends JpaRepository<Absence, UUID>{
 	@Query("select a from Absence a where EXTRACT(MONTH FROM a.dateDebut) = ?1 and EXTRACT(YEAR FROM a.dateDebut) = ?2 and a.status = dev.domain.enumerations.Status.STATUS_VALIDEE and a.collegue_abs.departement = ?3 ORDER BY a.collegue_abs.nom")
 	public List<Absence> findAbsencesValideeMoisAnneeDepartement(int mois, int annee, Departement departement);
 	
+	@Query("select new dev.controller.vm.ValidationVM(a.uuid, a.dateDebut, a.dateFin, a.type, CONCAT(col.nom,' ',col.prenom), a.status) from Absence a JOIN a.collegue_abs col JOIN col.roles r where a.status = dev.domain.enumerations.Status.STATUS_ATTENTE_VALIDATION and"
+			+ " a.collegue_abs.departement = ?1 and r.role = 'ROLE_EMPLOYE'")
+	public List<ValidationVM> findByRole(Departement departement);
+
+	@Modifying
+	@Query("update Absence a set a.status = ?1 where a.uuid = ?2")
+	public void replaceStatusAbs(Status s, UUID uuid);
+
+	@Query("select a.collegue_abs from Absence a where a.uuid = ?1")
+	public Collegue getColByAbsUuid(UUID uuid);
 }

@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import dev.controller.vm.AbsenceVM;
+import dev.controller.vm.ValidationVM;
 import dev.domain.Absence;
 import dev.domain.Collegue;
 import dev.domain.enumerations.Departement;
@@ -86,7 +87,6 @@ public class AbsenceService extends LogService {
 				 return ResponseEntity.status(HttpStatus.OK).body("");	 
 			 }
 			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dates se chevauchent");
-			
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Collegue non présent");
 		
@@ -118,9 +118,11 @@ public class AbsenceService extends LogService {
 
 				return ResponseEntity.status(HttpStatus.OK).body(abspost);
 			}
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("les dates se chevauchent");
 
 		}		
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dates se chevauchent");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("collegue non connecté");
 	}
 
 	public List<AbsenceVM> findAbsenceMoisAnnee(int mois, int annee){
@@ -150,5 +152,30 @@ public class AbsenceService extends LogService {
 
 		}
 		throw new RuntimeException("Error col non connecté ou vous n'êtes pas un manager et donc vous n'êtes pas autorisé");
+	}
+
+	public ResponseEntity<?> getListAbsenceParRole() {
+		Optional<Collegue> col = this.getColConnecte();
+
+		if (col.isPresent()) {		
+			List<ValidationVM> vm = this.absenceRepo.findByRole(col.get().getDepartement());
+			return ResponseEntity.status(HttpStatus.OK).body(vm);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("erreur collegue non connecté");
+	}
+
+	public ResponseEntity<?> replaceStatusAbs(ValidationVM vvm) {
+		Optional<Collegue> col = this.getColConnecte();
+
+		if (col.isPresent()) {
+			this.absenceRepo.replaceStatusAbs(vvm.getStatus(), vvm.getUuid());
+			if(vvm.getStatus().equals(Status.STATUS_REJETEE)) {
+				Collegue collegue = this.absenceRepo.getColByAbsUuid(vvm.getUuid());
+				// TODO rajouter solde à (collegue) un type de (vvl.getType()) 
+			}
+			return ResponseEntity.status(HttpStatus.OK).body("");
+		}
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("erreur collegue non connecté");
 	}
 }
