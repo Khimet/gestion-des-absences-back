@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.domain.enumerations.Departement;
 import dev.domain.enumerations.Type;
 
 /**
@@ -37,5 +38,16 @@ public class EnumController {
 		return tabTypeString.toArray(new String[0]);
 		
     }
+	
+//	@GetMapping("/departementEnum")
+//    public String[] getDepartementEnum() {
+//		Departement[] tabDepartement= Departement.values();
+//		List<String> tabDepartementString = new ArrayList<>() ;
+//		for (Departement departement : tabDepartement) {
+//			tabDepartementString.add(departement.toString());		
+//		}
+//		return tabDepartementString.toArray(new String[0]);
+//		
+//    }
 
 }
