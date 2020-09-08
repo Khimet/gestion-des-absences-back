@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.controller.vm.AbsencePostVM;
 import dev.controller.vm.AbsenceVM;
+import dev.controller.vm.JFerieRttVM;
+import dev.domain.enumerations.Departement;
 import dev.service.AbsenceService;
 
 /**
@@ -45,7 +48,7 @@ public class AbsenceController {
 		super();
 		this.absenceService = absenceRepo;
 	}
-	
+
 	@GetMapping
 	public List<AbsenceVM> getListAbsence() {
 		return this.absenceService.findAbsences();	
@@ -59,6 +62,22 @@ public class AbsenceController {
 	@PostMapping
 	public ResponseEntity<?> newAbsence(@RequestBody @Valid AbsenceVM newAbs, BindingResult res) { 
 		return this.absenceService.saveAbs(newAbs);
+	}
+	
+	@GetMapping("vmad")
+	public ResponseEntity<?> GetAbsValideeMoisAnneeDepartement(
+			@RequestParam("mois") Integer mois,
+			@RequestParam("annee") Integer annee,
+			@RequestParam("departement") Departement departement){
+		
+		if ( mois == null || annee == null || departement == null || mois <= 0 || annee <= 0) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+		}
+		
+		List<AbsenceVM> resultat = absenceService.getAbsencesValideeMoisAnneeDepartement(mois, annee, departement);
+		
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resultat);
 	}
 	
 	@PatchMapping
