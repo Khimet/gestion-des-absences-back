@@ -22,9 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.controller.vm.AbsencePostVM;
 import dev.controller.vm.AbsenceVM;
-import dev.controller.vm.JFerieRttVM;
+import dev.controller.vm.AbsenceVMStringDate;
 import dev.domain.enumerations.Departement;
 import dev.service.AbsenceService;
 
@@ -50,7 +49,7 @@ public class AbsenceController {
 	}
 
 	@GetMapping
-	public List<AbsenceVM> getListAbsence() {
+	public List<AbsenceVMStringDate> getListAbsence() {
 		return this.absenceService.findAbsences();	
 	}
 	
@@ -81,7 +80,7 @@ public class AbsenceController {
 	}
 	
 	@PatchMapping
-	public ResponseEntity<?> replaceAbsence(@RequestBody AbsenceVM updateAbs) {
+	public ResponseEntity<?> replaceAbsence(@RequestBody AbsenceVMStringDate updateAbs) {
 		return this.absenceService.patchAbs(updateAbs);
 	}
 	
