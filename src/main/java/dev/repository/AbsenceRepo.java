@@ -26,15 +26,11 @@ public interface AbsenceRepo extends JpaRepository<Absence, UUID>{
 	@Query("select a from Absence a where a.collegue_abs = ?1")
 	public List<Absence> findAbsences(Collegue col);
 	
-	
 	@Modifying
 	@Query("delete from Absence a where a.uuid = ?1 and a.collegue_abs = ?2")
 	public void deleteAbs(UUID uuid, Collegue col);
 	
-	
 	@Modifying
 	@Query("update Absence a set a.dateDebut = ?1 , a.dateFin = ?2 , a.type = ?3 , a.motif = ?4 , a.status = dev.domain.enumerations.Status.STATUS_INITIAL where a.uuid = ?5 and a.collegue_abs = ?6")
 	public void patchAbs(LocalDate newDateDebut, LocalDate newDateFin, Type newType, String newMotif, UUID uuid, Collegue col);
-	
-	
 }
