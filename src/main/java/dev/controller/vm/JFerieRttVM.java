@@ -4,55 +4,85 @@
 package dev.controller.vm;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import dev.domain.JFerieRtt;
 import dev.domain.enumerations.TypeFerieRtt;
 
-/**
- * @author robin
- *
- */
+
 public class JFerieRttVM {
 	
-	private int id;
+	private UUID uuid;
 	private LocalDate date;
 	private TypeFerieRtt type;
+	private boolean valide;
 	private String jour;
 	private String commentaire;
 	
+	/** Constructeur
+	 * 
+	 */
 	public JFerieRttVM() {
 		super();
 	}
-	
-	public JFerieRttVM(int id, LocalDate date, TypeFerieRtt type, String jour, String commentaire) {
+
+	/** Constructeur
+	 * @param date
+	 * @param type
+	 * @param commentaire
+	 */
+	public JFerieRttVM(LocalDate date, TypeFerieRtt type, String commentaire) {
 		super();
-		this.id = id;
 		this.date = date;
 		this.type = type;
-		this.jour = jour;
+		this.commentaire = commentaire;
+	}
+	
+	public JFerieRttVM(UUID uuid, LocalDate date, TypeFerieRtt type, String commentaire) {
+		super();
+		this.uuid = uuid;
+		this.date = date;
+		this.type = type;
 		this.commentaire = commentaire;
 	}
 	
 	public JFerieRttVM(JFerieRtt jfr) {
-		this.date = jfr.getDate();
-		this.type = jfr.getType();
-		this.commentaire = jfr.getCommentaire();
+        this.date = jfr.getDate();
+        this.type = jfr.getType();
+        this.commentaire = jfr.getCommentaire();
+    }
+
+	/** Constructeur
+	 * @param id
+	 * @param date
+	 * @param type
+	 * @param jour
+	 * @param commentaire
+	 */
+	public JFerieRttVM(UUID uuid, LocalDate date, TypeFerieRtt type, boolean valide, String jour, String commentaire) {
+		super();
+		this.uuid = uuid;
+		this.date = date;
+		this.type = type;
+		this.valide = valide;
+		this.jour = jour;
+		this.commentaire = commentaire;
 	}
-	
+
 	/**
 	 * Getter
-	 * @return the id
+	 * @return the uuid
 	 */
-	public int getId() {
-		return id;
+	public UUID getUuid() {
+		return uuid;
 	}
 
 	/**
 	 * Setter
-	 * @param id the id to set
+	 * @param uuid the uuid to set
 	 */
-	public void setId(int id) {
-		this.id = id;
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
 	}
 
 	/**
@@ -62,6 +92,7 @@ public class JFerieRttVM {
 	public LocalDate getDate() {
 		return date;
 	}
+
 	/**
 	 * Setter
 	 * @param date the date to set
@@ -69,6 +100,7 @@ public class JFerieRttVM {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
+
 	/**
 	 * Getter
 	 * @return the type
@@ -76,6 +108,7 @@ public class JFerieRttVM {
 	public TypeFerieRtt getType() {
 		return type;
 	}
+
 	/**
 	 * Setter
 	 * @param type the type to set
@@ -83,6 +116,23 @@ public class JFerieRttVM {
 	public void setType(TypeFerieRtt type) {
 		this.type = type;
 	}
+
+	/**
+	 * Getter
+	 * @return the valide
+	 */
+	public boolean isValide() {
+		return valide;
+	}
+
+	/**
+	 * Setter
+	 * @param valide the valide to set
+	 */
+	public void setValide(boolean valide) {
+		this.valide = valide;
+	}
+
 	/**
 	 * Getter
 	 * @return the jour
@@ -106,6 +156,7 @@ public class JFerieRttVM {
 	public String getCommentaire() {
 		return commentaire;
 	}
+
 	/**
 	 * Setter
 	 * @param commentaire the commentaire to set
@@ -113,4 +164,5 @@ public class JFerieRttVM {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
+
 }

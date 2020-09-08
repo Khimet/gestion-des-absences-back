@@ -38,16 +38,5 @@ public class EnumController {
 		return tabTypeString.toArray(new String[0]);
 		
     }
-	
-//	@GetMapping("/departementEnum")
-//    public String[] getDepartementEnum() {
-//		Departement[] tabDepartement= Departement.values();
-//		List<String> tabDepartementString = new ArrayList<>() ;
-//		for (Departement departement : tabDepartement) {
-//			tabDepartementString.add(departement.toString());		
-//		}
-//		return tabDepartementString.toArray(new String[0]);
-//		
-//    }
 
 }

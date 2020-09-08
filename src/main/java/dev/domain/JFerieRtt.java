@@ -4,6 +4,7 @@
 package dev.domain;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,31 +23,36 @@ import dev.domain.enumerations.TypeFerieRtt;
 public class JFerieRtt {
 	
 	@Id
-	private int id;
+	private UUID uuid;
 	private LocalDate date;
 	
 	@Enumerated(EnumType.STRING)
 	private TypeFerieRtt type;
+	private boolean valide;
+	
 	private String commentaire;
 	
 	public JFerieRtt() {
 		super();
+		this.uuid = UUID.randomUUID();
 	}
 	
-	public JFerieRtt(LocalDate date, TypeFerieRtt type, String commentaire) {
+	public JFerieRtt(LocalDate date, TypeFerieRtt type, boolean valide, String commentaire) {
 		super();
+		this.uuid = UUID.randomUUID();
 		this.date = date;
 		this.type = type;
+		this.valide = valide;
 		this.commentaire = commentaire;
 	}
 	
 	
 	/**
 	 * Getter
-	 * @return the id
+	 * @return the uuid
 	 */
-	public int getId() {
-		return id;
+	public UUID getUuid() {
+		return uuid;
 	}
 
 	/**
@@ -77,6 +83,23 @@ public class JFerieRtt {
 	public void setType(TypeFerieRtt type) {
 		this.type = type;
 	}
+	
+	/**
+	 * Getter
+	 * @return the valide
+	 */
+	public boolean isValide() {
+		return valide;
+	}
+
+	/**
+	 * Setter
+	 * @param valide the valide to set
+	 */
+	public void setValide(boolean valide) {
+		this.valide = valide;
+	}
+
 	/**
 	 * Getter
 	 * @return the commentaire

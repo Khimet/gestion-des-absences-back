@@ -22,7 +22,7 @@ public class AbsenceVM {
 	private Type type;
 	private Status status;
 	private String motif;
-	private CollegueVM collegueVM;
+	private CollegueVM collegue;
 	
 	public AbsenceVM() {
 		super();
@@ -38,6 +38,22 @@ public class AbsenceVM {
 		this.motif = motif;
 	}
 	
+	/**
+	 * Constructeur
+	 * 
+	 * @param dateDebut
+	 * @param dateFin
+	 * @param type
+	 * @param motif
+	 */
+	public AbsenceVM(LocalDate dateDebut, LocalDate dateFin, Type type, String motif) {
+		super();
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.type = type;
+		this.motif = motif;
+	}
+	
 	
 	public AbsenceVM(Absence abs) {
 		super();
@@ -47,7 +63,7 @@ public class AbsenceVM {
 		this.type = abs.getType();
 		this.status = abs.getStatus();
 		this.motif = abs.getMotif();
-		this.collegueVM = new CollegueVM(abs.getCollegue_abs());
+		this.collegue = new CollegueVM(abs.getCollegue_abs());
 	}
 
 	/**
@@ -147,17 +163,17 @@ public class AbsenceVM {
 	}
 
 	/**
-	 * @return the collegueVM
+	 * @return the collegue
 	 */
-	public CollegueVM getCollegueVM() {
-		return collegueVM;
+	public CollegueVM getCollegue() {
+		return collegue;
 	}
 
 	/**
-	 * @param collegueVM the collegueVM to set
+	 * @param collegue the collegue to set
 	 */
-	public void setCollegueVM(CollegueVM collegueVM) {
-		this.collegueVM = collegueVM;
+	public void setCollegue(CollegueVM collegue) {
+		this.collegue = collegue;
 	}
 	
 	
