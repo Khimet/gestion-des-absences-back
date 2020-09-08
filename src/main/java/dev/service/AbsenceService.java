@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import dev.controller.vm.AbsenceVM;
 import dev.domain.Absence;
 import dev.domain.Collegue;
+import dev.domain.enumerations.Departement;
+import dev.domain.enumerations.Role;
 import dev.domain.enumerations.Status;
 import dev.repository.AbsenceRepo;
 import dev.repository.CollegueRepo;
@@ -62,11 +64,7 @@ public class AbsenceService extends LogService {
 			throw new RuntimeException("Error col non connecté - delete absence");
 		}
 	}
-	
-	/**
-	 * @param updateAbs
-	 * @return
-	 */
+
 	public ResponseEntity<?> patchAbs(AbsenceVM updateAbs) {
 		Optional<Collegue> col = getColConnecte();
 		if (col.isPresent()) {
@@ -84,8 +82,6 @@ public class AbsenceService extends LogService {
 			}
 			
 			 if (valide) {
-				 System.out.println(updateAbs.getDateDebut()+ " - " + updateAbs.getDateFin()+ "- " +updateAbs.getType() + " - " + updateAbs.getMotif()+ " - " + updateAbs.getUuid()+ " - " + col.get());
-				 
 				 this.absenceRepo.patchAbs(updateAbs.getDateDebut(), updateAbs.getDateFin(), updateAbs.getType(), updateAbs.getMotif(), updateAbs.getUuid(), col.get());
 				 return ResponseEntity.status(HttpStatus.OK).body("");	 
 			 }
@@ -96,8 +92,6 @@ public class AbsenceService extends LogService {
 		
 		
 	}
-	
-	
 	
 	public ResponseEntity<?> saveAbs(AbsenceVM absenceNew) {
 		Optional<Collegue> col = getColConnecte();
@@ -138,5 +132,23 @@ public class AbsenceService extends LogService {
 	         resultatsAbs.add(new AbsenceVM(abs));
 	    });
 	    return resultatsAbs;
+	}
+
+	public List<AbsenceVM> getAbsencesValideeMoisAnneeDepartement(int mois, int annee, Departement departement) {
+		
+		Optional<Collegue> col = this.getColConnecte();
+		
+		if (col.isPresent() && col.get().getRoles().get(0).getRole() == Role.ROLE_MANAGER) {
+
+			List<Absence> absMoisAnneeDepartement = absenceRepo.findAbsencesValideeMoisAnneeDepartement(mois, annee, departement);
+			List<AbsenceVM> resultat = new ArrayList<>();
+
+			absMoisAnneeDepartement.forEach(a -> {
+				resultat.add(new AbsenceVM(a));
+			});
+			return resultat;
+
+		}
+		throw new RuntimeException("Error col non connecté ou vous n'êtes pas un manager et donc vous n'êtes pas autorisé");
 	}
 }

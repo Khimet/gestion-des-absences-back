@@ -1,6 +1,3 @@
-/**
- * 
- */
 package dev.controller.vm;
 
 import java.time.LocalDate;
@@ -22,6 +19,7 @@ public class AbsenceVM {
 	private Type type;
 	private Status status;
 	private String motif;
+	private CollegueVM collegueVM;
 	
 	public AbsenceVM() {
 		super();
@@ -54,25 +52,30 @@ public class AbsenceVM {
 	}
 
 	public AbsenceVM(Absence abs) {
-		this.dateDebut = abs.getDateDebut();
-		this.dateFin = abs.getDateFin();
-		this.type = abs.getType();
-		this.status = abs.getStatus();
+        super();
+        this.uuid = abs.getUuid();
+        this.dateDebut = abs.getDateDebut();
+        this.dateFin = abs.getDateFin();
+        this.type = abs.getType();
+        this.status = abs.getStatus();
+        this.motif = abs.getMotif();
+        this.collegueVM = new CollegueVM(abs.getCollegue_abs());
+    }
+
+	/**
+	 * Getter
+	 * @return the uuid
+	 */
+	public UUID getUuid() {
+		return uuid;
 	}
 
-
-	/** Getter
-	 * @return the motif
+	/**
+	 * Setter
+	 * @param uuid the uuid to set
 	 */
-	public String getMotif() {
-		return motif;
-	}
-
-	/** Setter
-	 * @param motif the motif to set
-	 */
-	public void setMotif(String motif) {
-		this.motif = motif;
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
 	}
 
 	/**
@@ -141,17 +144,33 @@ public class AbsenceVM {
 
 	/**
 	 * Getter
-	 * @return the uuid
+	 * @return the motif
 	 */
-	public UUID getUuid() {
-		return uuid;
+	public String getMotif() {
+		return motif;
 	}
 
 	/**
 	 * Setter
-	 * @param uuid the uuid to set
+	 * @param motif the motif to set
 	 */
-	public void setUuid(UUID uuid) {
-		this.uuid = uuid;
+	public void setMotif(String motif) {
+		this.motif = motif;
+	}
+
+	/**
+	 * Getter
+	 * @return the collegueVM
+	 */
+	public CollegueVM getCollegueVM() {
+		return collegueVM;
+	}
+
+	/**
+	 * Setter
+	 * @param collegueVM the collegueVM to set
+	 */
+	public void setCollegueVM(CollegueVM collegueVM) {
+		this.collegueVM = collegueVM;
 	}
 }
