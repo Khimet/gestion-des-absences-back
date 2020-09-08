@@ -30,6 +30,9 @@ public interface AbsenceRepo extends JpaRepository<Absence, UUID>{
 	@Query("select a from Absence a where a.collegue_abs = ?1")
 	public List<Absence> findAbsences(Collegue col);
 	
+	@Query("select a from Absence a where a.collegue_abs.id = ?1 and a.status = dev.domain.enumerations.Status.STATUS_INITIAL")
+	public List<Absence> findAbsencesStatusInitial(Long id);
+	
 	@Modifying
 	@Query("delete from Absence a where a.uuid = ?1 and a.collegue_abs = ?2")
 	public void deleteAbs(UUID uuid, Collegue col);
@@ -51,4 +54,5 @@ public interface AbsenceRepo extends JpaRepository<Absence, UUID>{
 
 	@Query("select a.collegue_abs from Absence a where a.uuid = ?1")
 	public Collegue getColByAbsUuid(UUID uuid);
+	
 }
