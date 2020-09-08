@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.AbsenceVM;
+import dev.controller.vm.ValidationVM;
 import dev.controller.vm.AbsenceVMStringDate;
 import dev.domain.enumerations.Departement;
 import dev.service.AbsenceService;
@@ -98,7 +100,15 @@ public class AbsenceController {
         return ResponseEntity.status(HttpStatus.OK).body(absence);
     }
 	
-	// TODO
-	// @GetMapping("par-role")
-	// public ResponseEntity<?> getListAbsenceParRole(){}
+	@Secured("ROLE_MANAGER")
+	@GetMapping("par-role")
+	public ResponseEntity<?> getListAbsenceParRole(){
+		return this.absenceService.getListAbsenceParRole();
+	}
+	
+	@Secured("ROLE_MANAGER")
+	@PatchMapping("par-role")
+	public ResponseEntity<?> replaceStatusAbs(@RequestBody ValidationVM vvm){
+		return this.absenceService.replaceStatusAbs(vvm);
+	}
 }
