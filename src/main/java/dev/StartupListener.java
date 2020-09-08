@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import dev.domain.Collegue;
 import dev.domain.RoleCollegue;
+import dev.domain.enumerations.Departement;
 import dev.domain.enumerations.Role;
 import dev.repository.CollegueRepo;
 
@@ -42,13 +43,6 @@ public class StartupListener {
 //        this.collegueRepo.save(col1);
 //  
 //        Collegue col2 = new Collegue();
-//        col2.setNom("manager2");
-//        col2.setPrenom("DEV");
-//        col2.setEmail("manager2@dev.fr");
-//        col2.setMotDePasse(passwordEncoder.encode("superpass"));
-//        col2.setRoles(Arrays.asList(new RoleCollegue(col2, Role.ROLE_MANAGER))); 
-//        col2.setNbCongesPayes(17);
-//        col2.setNbRtt(13);
-//        this.collegueRepo.save(col2);
+
     }
 }

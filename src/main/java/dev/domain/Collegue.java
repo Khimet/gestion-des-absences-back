@@ -1,7 +1,17 @@
 package dev.domain;
 
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import dev.domain.enumerations.Departement;
 
 @Entity
 public class Collegue {
@@ -27,6 +37,9 @@ public class Collegue {
     private int nbRtt;
    
     private int nbCongesPayes;
+    
+    @Enumerated(EnumType.STRING)
+    private Departement departement;
     
     public Collegue() {
 		super();
@@ -140,6 +153,20 @@ public class Collegue {
 	 */
 	public void setNbCongesPayes(int nbCongesPayes) {
 		this.nbCongesPayes = nbCongesPayes;
+	}
+
+	/**
+	 * @return the departement
+	 */
+	public Departement getDepartement() {
+		return departement;
+	}
+
+	/**
+	 * @param departement the departement to set
+	 */
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
 	}
     
     

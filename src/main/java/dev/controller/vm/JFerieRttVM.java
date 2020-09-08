@@ -6,6 +6,7 @@ package dev.controller.vm;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import dev.domain.JFerieRtt;
 import dev.domain.enumerations.TypeFerieRtt;
 
 
@@ -24,7 +25,7 @@ public class JFerieRttVM {
 	public JFerieRttVM() {
 		super();
 	}
-	
+
 	/** Constructeur
 	 * @param date
 	 * @param type
@@ -44,6 +45,12 @@ public class JFerieRttVM {
 		this.type = type;
 		this.commentaire = commentaire;
 	}
+	
+	public JFerieRttVM(JFerieRtt jfr) {
+        this.date = jfr.getDate();
+        this.type = jfr.getType();
+        this.commentaire = jfr.getCommentaire();
+    }
 
 	/** Constructeur
 	 * @param id
@@ -62,42 +69,48 @@ public class JFerieRttVM {
 		this.commentaire = commentaire;
 	}
 
-	/** Getter
-	 * @return the id
+	/**
+	 * Getter
+	 * @return the uuid
 	 */
 	public UUID getUuid() {
 		return uuid;
 	}
 
-	/** Setter
-	 * @param id the id to set
+	/**
+	 * Setter
+	 * @param uuid the uuid to set
 	 */
-	public void setId(UUID uuid) {
+	public void setUuid(UUID uuid) {
 		this.uuid = uuid;
 	}
 
-	/** Getter
+	/**
+	 * Getter
 	 * @return the date
 	 */
 	public LocalDate getDate() {
 		return date;
 	}
 
-	/** Setter
+	/**
+	 * Setter
 	 * @param date the date to set
 	 */
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
-	/** Getter
+	/**
+	 * Getter
 	 * @return the type
 	 */
 	public TypeFerieRtt getType() {
 		return type;
 	}
 
-	/** Setter
+	/**
+	 * Setter
 	 * @param type the type to set
 	 */
 	public void setType(TypeFerieRtt type) {
@@ -120,31 +133,36 @@ public class JFerieRttVM {
 		this.valide = valide;
 	}
 
-	/** Getter
+	/**
+	 * Getter
 	 * @return the jour
 	 */
 	public String getJour() {
 		return jour;
 	}
 
-	/** Setter
+	/**
+	 * Setter
 	 * @param jour the jour to set
 	 */
 	public void setJour(String jour) {
 		this.jour = jour;
 	}
 
-	/** Getter
+	/**
+	 * Getter
 	 * @return the commentaire
 	 */
 	public String getCommentaire() {
 		return commentaire;
 	}
 
-	/** Setter
+	/**
+	 * Setter
 	 * @param commentaire the commentaire to set
 	 */
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
+
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package dev.repository;
 
 import java.time.LocalDate;
@@ -14,15 +11,11 @@ import org.springframework.data.jpa.repository.Query;
 import dev.domain.JFerieRtt;
 import dev.domain.enumerations.TypeFerieRtt;
 
-/**
- * @author vokankocak
- *
- */
 public interface JFerieRttRepo extends JpaRepository<JFerieRtt, Integer>{
 	
-	@Query("select j from JFerieRtt j where EXTRACT (MONTH FROM j.date) = ?1 and EXTRACT (YEAR FROM j.date)=?2")
+	@Query("select j from JFerieRtt j where EXTRACT (MONTH FROM j.date) = ?1 and EXTRACT (YEAR FROM j.date) = ?2")
 	List<JFerieRtt> findJourFerieRttMoisAnnee(int mois, int annee);
-	
+
 	@Query("select j.date from JFerieRtt j")
 	public List<LocalDate> findAllDate();
 	
@@ -39,4 +32,5 @@ public interface JFerieRttRepo extends JpaRepository<JFerieRtt, Integer>{
 	@Modifying
 	@Query("update JFerieRtt j set j.date = ?1, j.type = ?2, j.commentaire = ?3 where j.uuid = ?4")
 	public void updateJFerieRtt (LocalDate date, TypeFerieRtt type, String commentaire, UUID uuid);
+
 }
