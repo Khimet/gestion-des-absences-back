@@ -10,9 +10,10 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import dev.controller.vm.AbsencePostVM;
 import dev.controller.vm.AbsenceVM;
 import dev.domain.Absence;
 import dev.domain.Collegue;
@@ -61,18 +62,71 @@ public class AbsenceService extends LogService {
 			throw new RuntimeException("Error col non connecté - delete absence");
 		}
 	}
-
-	public AbsencePostVM saveAbs(AbsencePostVM a) {
+	
+	/**
+	 * @param updateAbs
+	 * @return
+	 */
+	public ResponseEntity<?> patchAbs(AbsenceVM updateAbs) {
 		Optional<Collegue> col = getColConnecte();
 		if (col.isPresent()) {
+			
+			List<Absence> listOldAbsence = this.absenceRepo.findAbsences(col.get());
+			boolean valide = true;
 
-			Absence tmp = absenceRepo.save(new Absence(a.getDateDebut(), a.getDateFin(), a.getType(),
-					Status.STATUS_INITIAL, a.getMotif(), col.get()));
-			AbsencePostVM abspost = new AbsencePostVM(tmp.getDateDebut(), tmp.getDateFin(), tmp.getType(),
-					tmp.getMotif());
-			return abspost;
+			for (Absence absenceOld : listOldAbsence) {
+
+				if (!(updateAbs.getDateFin().isBefore(absenceOld.getDateDebut())
+						|| updateAbs.getDateDebut().isAfter(absenceOld.getDateFin())) && !(updateAbs.getUuid().equals(absenceOld.getUuid()))) {
+
+					valide = false;
+				}
+			}
+			
+			 if (valide) {
+				 System.out.println(updateAbs.getDateDebut()+ " - " + updateAbs.getDateFin()+ "- " +updateAbs.getType() + " - " + updateAbs.getMotif()+ " - " + updateAbs.getUuid()+ " - " + col.get());
+				 
+				 this.absenceRepo.patchAbs(updateAbs.getDateDebut(), updateAbs.getDateFin(), updateAbs.getType(), updateAbs.getMotif(), updateAbs.getUuid(), col.get());
+				 return ResponseEntity.status(HttpStatus.OK).body("");	 
+			 }
+			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dates se chevauchent");
+			
 		}
-		throw new RuntimeException("Error col non connecté -  save absence");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Collegue non présent");
+		
+		
+	}
+	
+	
+	
+	public ResponseEntity<?> saveAbs(AbsenceVM absenceNew) {
+		Optional<Collegue> col = getColConnecte();
+
+		if (col.isPresent()) {
+			
+			List<Absence> listOldAbsence = this.absenceRepo.findAbsences(col.get());
+			boolean valide = true;
+
+			for (Absence absenceOld : listOldAbsence) {
+
+				if (!(absenceNew.getDateFin().isBefore(absenceOld.getDateDebut())
+						|| absenceNew.getDateDebut().isAfter(absenceOld.getDateFin()))) {
+
+					valide = false;
+				}
+			}
+			
+			if (valide) {
+				Absence tmp = absenceRepo.save(new Absence(absenceNew.getDateDebut(), absenceNew.getDateFin(),
+						absenceNew.getType(), Status.STATUS_INITIAL, absenceNew.getMotif(), col.get()));
+				AbsenceVM abspost = new AbsenceVM(tmp.getDateDebut(), tmp.getDateFin(), tmp.getType(),
+						tmp.getMotif());
+
+				return ResponseEntity.status(HttpStatus.OK).body(abspost);
+			}
+
+		}		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dates se chevauchent");
 	}
 
 	public List<AbsenceVM> findAbsenceMoisAnnee(int mois, int annee){

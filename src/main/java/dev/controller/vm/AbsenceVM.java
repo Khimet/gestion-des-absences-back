@@ -36,6 +36,22 @@ public class AbsenceVM {
 		this.status = status;
 		this.motif = motif;
 	}
+	
+	/**
+	 * Constructeur
+	 * 
+	 * @param dateDebut
+	 * @param dateFin
+	 * @param type
+	 * @param motif
+	 */
+	public AbsenceVM(LocalDate dateDebut, LocalDate dateFin, Type type, String motif) {
+		super();
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.type = type;
+		this.motif = motif;
+	}
 
 	public AbsenceVM(Absence abs) {
 		this.dateDebut = abs.getDateDebut();
