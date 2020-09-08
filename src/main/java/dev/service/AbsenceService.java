@@ -3,6 +3,8 @@
  */
 package dev.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import dev.controller.vm.AbsenceVM;
 import dev.controller.vm.ValidationVM;
+import dev.controller.vm.AbsenceVMStringDate;
 import dev.domain.Absence;
 import dev.domain.Collegue;
 import dev.domain.enumerations.Departement;
@@ -39,17 +42,17 @@ public class AbsenceService extends LogService {
 		this.absenceRepo = absenceRepo;
 	}
 
-	public List<AbsenceVM> findAbsences() {
+	public List<AbsenceVMStringDate> findAbsences() {
 
 		Optional<Collegue> col = this.getColConnecte();
 
 		if (col.isPresent()) {
 
 			List<Absence> tmp = this.absenceRepo.findAbsences(col.get());
-			List<AbsenceVM> res = new ArrayList<>();
+			List<AbsenceVMStringDate> res = new ArrayList<>();
 
 			for (Absence a : tmp) {
-				res.add(new AbsenceVM(a.getUuid(), a.getDateDebut(), a.getDateFin(), a.getType(), a.getStatus(),
+				res.add(new AbsenceVMStringDate(a.getUuid(), a.getDateDebut(), a.getDateFin(), a.getType(), a.getStatus(),
 						a.getMotif()));
 			}
 			return res;
@@ -66,8 +69,15 @@ public class AbsenceService extends LogService {
 		}
 	}
 
-	public ResponseEntity<?> patchAbs(AbsenceVM updateAbs) {
+	public ResponseEntity<?> patchAbs(AbsenceVMStringDate updateAbs) {
+
 		Optional<Collegue> col = getColConnecte();
+		// TODO: Convertir AbsenceVMStringDate en Absence
+		
+		LocalDate dateDebut = LocalDate.parse(updateAbs.getDateDebut(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		LocalDate dateFin = LocalDate.parse(updateAbs.getDateFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+		
 		if (col.isPresent()) {
 			
 			List<Absence> listOldAbsence = this.absenceRepo.findAbsences(col.get());
@@ -75,15 +85,16 @@ public class AbsenceService extends LogService {
 
 			for (Absence absenceOld : listOldAbsence) {
 
-				if (!(updateAbs.getDateFin().isBefore(absenceOld.getDateDebut())
-						|| updateAbs.getDateDebut().isAfter(absenceOld.getDateFin())) && !(updateAbs.getUuid().equals(absenceOld.getUuid()))) {
+				if (!(dateFin.isBefore(absenceOld.getDateDebut())
+						|| dateDebut.isAfter(absenceOld.getDateFin())) && !(updateAbs.getUuid().equals(absenceOld.getUuid()))) {
 
 					valide = false;
 				}
 			}
 			
 			 if (valide) {
-				 this.absenceRepo.patchAbs(updateAbs.getDateDebut(), updateAbs.getDateFin(), updateAbs.getType(), updateAbs.getMotif(), updateAbs.getUuid(), col.get());
+				 
+				 this.absenceRepo.patchAbs(dateDebut, dateFin, updateAbs.getType(), updateAbs.getMotif(), updateAbs.getUuid(), col.get());
 				 return ResponseEntity.status(HttpStatus.OK).body("");	 
 			 }
 			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dates se chevauchent");
