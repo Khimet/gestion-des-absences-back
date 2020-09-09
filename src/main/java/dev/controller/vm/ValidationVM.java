@@ -1,16 +1,11 @@
 /**
  * 
  */
-package dev.domain;
+package dev.controller.vm;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import dev.domain.enumerations.Status;
 import dev.domain.enumerations.Type;
 
@@ -18,59 +13,42 @@ import dev.domain.enumerations.Type;
  * @author robin
  *
  */
+public class ValidationVM {
 
-@Entity
-public class Absence {
-
-	@Id
 	private UUID uuid;
-	
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
-	
-	@Enumerated(EnumType.STRING)
 	private Type type;
-	
-	@Enumerated(EnumType.STRING)
+	private String nom;
 	private Status status;
 	
-	private String motif;
-	
-	@ManyToOne
-	private Collegue collegue_abs;
-
-	public Absence() {
+	public ValidationVM() {
 		super();
-		this.uuid = UUID.randomUUID();
 	}
-
-	public Absence(LocalDate dateDebut, LocalDate dateFin, Type type, Status status, String motif, Collegue collegue_abs) {
+	
+	public ValidationVM(UUID uuid, LocalDate dateDebut, LocalDate dateFin, Type type, String nom, Status status) {
 		super();
-		this.uuid = UUID.randomUUID();
+		this.uuid = uuid;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.type = type;
+		this.nom = nom;
 		this.status = status;
-		this.motif = motif;
-		this.collegue_abs = collegue_abs;
 	}
-
 	/**
 	 * Getter
-	 * @return the uuid
+	 * @return the uuidAbs
 	 */
 	public UUID getUuid() {
 		return uuid;
 	}
-
 	/**
 	 * Setter
-	 * @param uuid the uuid to set
+	 * @param uuidAbs the uuidAbs to set
 	 */
 	public void setUuid(UUID uuid) {
 		this.uuid = uuid;
 	}
-
 	/**
 	 * Getter
 	 * @return the dateDebut
@@ -78,7 +56,6 @@ public class Absence {
 	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
-
 	/**
 	 * Setter
 	 * @param dateDebut the dateDebut to set
@@ -86,7 +63,6 @@ public class Absence {
 	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
-
 	/**
 	 * Getter
 	 * @return the dateFin
@@ -94,7 +70,6 @@ public class Absence {
 	public LocalDate getDateFin() {
 		return dateFin;
 	}
-
 	/**
 	 * Setter
 	 * @param dateFin the dateFin to set
@@ -102,7 +77,6 @@ public class Absence {
 	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
-
 	/**
 	 * Getter
 	 * @return the type
@@ -110,7 +84,6 @@ public class Absence {
 	public Type getType() {
 		return type;
 	}
-
 	/**
 	 * Setter
 	 * @param type the type to set
@@ -118,7 +91,20 @@ public class Absence {
 	public void setType(Type type) {
 		this.type = type;
 	}
-
+	/**
+	 * Getter
+	 * @return the nom
+	 */
+	public String getNom() {
+		return nom;
+	}
+	/**
+	 * Setter
+	 * @param nom the nom to set
+	 */
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 	/**
 	 * Getter
 	 * @return the status
@@ -126,7 +112,6 @@ public class Absence {
 	public Status getStatus() {
 		return status;
 	}
-
 	/**
 	 * Setter
 	 * @param status the status to set
@@ -134,36 +119,7 @@ public class Absence {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
-	/**
-	 * Getter
-	 * @return the motif
-	 */
-	public String getMotif() {
-		return motif;
-	}
-
-	/**
-	 * Setter
-	 * @param motif the motif to set
-	 */
-	public void setMotif(String motif) {
-		this.motif = motif;
-	}
-
-	/**
-	 * Getter
-	 * @return the collegue_abs
-	 */
-	public Collegue getCollegue_abs() {
-		return collegue_abs;
-	}
-
-	/**
-	 * Setter
-	 * @param collegue_abs the collegue_abs to set
-	 */
-	public void setCollegue_abs(Collegue collegue_abs) {
-		this.collegue_abs = collegue_abs;
-	}
+	
+	
+	
 }

@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.controller.vm.AbsencePostVM;
 import dev.controller.vm.AbsenceVM;
-import dev.controller.vm.JFerieRttVM;
+import dev.controller.vm.ValidationVM;
+import dev.controller.vm.AbsenceVMStringDate;
 import dev.domain.enumerations.Departement;
 import dev.service.AbsenceService;
 import dev.controller.vm.ValidationVM;
@@ -58,7 +58,7 @@ public class AbsenceController {
 	}
 
 	@GetMapping
-	public List<AbsenceVM> getListAbsence() {
+	public List<AbsenceVMStringDate> getListAbsence() {
 		return this.absenceService.findAbsences();	
 	}
 	
@@ -86,7 +86,37 @@ public class AbsenceController {
 		
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resultat);
-		
+	}
+	
+	@PatchMapping
+	public ResponseEntity<?> replaceAbsence(@RequestBody AbsenceVMStringDate updateAbs) {
+		return this.absenceService.patchAbs(updateAbs);
+	}
+	
+	@GetMapping("ma")
+    public ResponseEntity<?> getListAbsenceMoisAnnee(
+            @RequestParam("mois") Integer mois,
+            @RequestParam("annee") Integer annee){
+        
+        if ( mois == null || annee == null || mois < 0 || annee <= 0 ) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+        }
+        
+        List<AbsenceVM> absence = absenceService.findAbsenceMoisAnnee(mois, annee);
+       
+        return ResponseEntity.status(HttpStatus.OK).body(absence);
+    }
+	
+	@Secured("ROLE_MANAGER")
+	@GetMapping("par-role")
+	public ResponseEntity<?> getListAbsenceParRole(){
+		return this.absenceService.getListAbsenceParRole();
+	}
+	
+	@Secured("ROLE_MANAGER")
+	@PatchMapping("par-role")
+	public ResponseEntity<?> replaceStatusAbs(@RequestBody ValidationVM vvm){
+		return this.absenceService.replaceStatusAbs(vvm);
 	}
 	
 	@PatchMapping

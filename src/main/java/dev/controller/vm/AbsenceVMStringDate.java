@@ -1,6 +1,10 @@
+/**
+ * 
+ */
 package dev.controller.vm;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import dev.domain.Absence;
@@ -11,25 +15,26 @@ import dev.domain.enumerations.Type;
  * @author robin
  *
  */
-public class AbsenceVM {
+public class AbsenceVMStringDate {
 
 	private UUID uuid;
-	private LocalDate dateDebut;
-	private LocalDate dateFin;
+	private String dateDebut;
+	private String dateFin;
 	private Type type;
 	private Status status;
 	private String motif;
-	private CollegueVM collegue;
 	
-	public AbsenceVM() {
+	public AbsenceVMStringDate() {
 		super();
 	}
 
-	public AbsenceVM(UUID uuid, LocalDate dateDebut, LocalDate dateFin, Type type, Status status, String motif) {
+	
+	public AbsenceVMStringDate(UUID uuid, LocalDate dateDebut, LocalDate dateFin, Type type, Status status, String motif) {
 		super();
+		DateTimeFormatter formateur = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		this.uuid = uuid;
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
+		this.dateDebut = formateur.format(dateDebut);
+		this.dateFin = formateur.format(dateFin);
 		this.type = type;
 		this.status = status;
 		this.motif = motif;
@@ -43,47 +48,44 @@ public class AbsenceVM {
 	 * @param type
 	 * @param motif
 	 */
-	public AbsenceVM(LocalDate dateDebut, LocalDate dateFin, Type type, String motif) {
+	public AbsenceVMStringDate(LocalDate dateDebut, LocalDate dateFin, Type type, String motif) {
 		super();
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
+		DateTimeFormatter formateur = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		this.dateDebut = formateur.format(dateDebut);
+		this.dateFin = formateur.format(dateDebut);
 		this.type = type;
 		this.motif = motif;
 	}
-	
-	
-	public AbsenceVM(Absence abs) {
-		super();
-		this.uuid = abs.getUuid();
-		this.dateDebut = abs.getDateDebut();
-		this.dateFin = abs.getDateFin();
+
+	public AbsenceVMStringDate(Absence abs) {
+		DateTimeFormatter formateur = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+		this.dateDebut = formateur.format(abs.getDateDebut());
+		this.dateFin = formateur.format(abs.getDateFin());
 		this.type = abs.getType();
 		this.status = abs.getStatus();
-		this.motif = abs.getMotif();
-		this.collegue = new CollegueVM(abs.getCollegue_abs());
 	}
 
-	/**
-	 * Getter
-	 * @return the uuid
+
+	/** Getter
+	 * @return the motif
 	 */
-	public UUID getUuid() {
-		return uuid;
+	public String getMotif() {
+		return motif;
 	}
 
-	/**
-	 * Setter
-	 * @param uuid the uuid to set
+	/** Setter
+	 * @param motif the motif to set
 	 */
-	public void setUuid(UUID uuid) {
-		this.uuid = uuid;
+	public void setMotif(String motif) {
+		this.motif = motif;
 	}
 
 	/**
 	 * Getter
 	 * @return the dateDebut
 	 */
-	public LocalDate getDateDebut() {
+	public String getDateDebut() {
 		return dateDebut;
 	}
 
@@ -91,7 +93,7 @@ public class AbsenceVM {
 	 * Setter
 	 * @param dateDebut the dateDebut to set
 	 */
-	public void setDateDebut(LocalDate dateDebut) {
+	public void setDateDebut(String dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
@@ -99,7 +101,7 @@ public class AbsenceVM {
 	 * Getter
 	 * @return the dateFin
 	 */
-	public LocalDate getDateFin() {
+	public String getDateFin() {
 		return dateFin;
 	}
 
@@ -107,7 +109,7 @@ public class AbsenceVM {
 	 * Setter
 	 * @param dateFin the dateFin to set
 	 */
-	public void setDateFin(LocalDate dateFin) {
+	public void setDateFin(String dateFin) {
 		this.dateFin = dateFin;
 	}
 
@@ -145,31 +147,17 @@ public class AbsenceVM {
 
 	/**
 	 * Getter
-	 * @return the motif
+	 * @return the uuid
 	 */
-	public String getMotif() {
-		return motif;
+	public UUID getUuid() {
+		return uuid;
 	}
 
 	/**
 	 * Setter
-	 * @param motif the motif to set
+	 * @param uuid the uuid to set
 	 */
-	public void setMotif(String motif) {
-		this.motif = motif;
-	}
-
-	/**
-	 * @return the collegue
-	 */
-	public CollegueVM getCollegue() {
-		return collegue;
-	}
-
-	/**
-	 * @param collegue the collegue to set
-	 */
-	public void setCollegue(CollegueVM collegue) {
-		this.collegue = collegue;
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
 	}
 }

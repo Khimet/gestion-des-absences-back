@@ -33,43 +33,83 @@ public class CollegueVM {
 		this.nbCongesPayes = col.getNbCongesPayes();
 		this.departement = col.getDepartement();
 	}
-	
+
+	/**
+	 * Getter
+	 * @return the id
+	 */
 	public long getId() {
 		return id;
 	}
 
+	/**
+	 * Setter
+	 * @param id the id to set
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Getter
+	 * @return the email
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * Setter
+	 * @param email the email to set
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	/**
+	 * Getter
+	 * @return the nom
+	 */
 	public String getNom() {
 		return nom;
 	}
 
+	/**
+	 * Setter
+	 * @param nom the nom to set
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
+	/**
+	 * Getter
+	 * @return the prenom
+	 */
 	public String getPrenom() {
 		return prenom;
 	}
 
+	/**
+	 * Setter
+	 * @param prenom the prenom to set
+	 */
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
 
+	/**
+	 * Getter
+	 * @return the roles
+	 */
 	public List<Role> getRoles() {
 		return roles;
 	}
 
+	/**
+	 * Setter
+	 * @param roles the roles to set
+	 */
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
@@ -107,6 +147,7 @@ public class CollegueVM {
 	}
 
 	/**
+	 * Getter
 	 * @return the departement
 	 */
 	public Departement getDepartement() {
@@ -114,10 +155,13 @@ public class CollegueVM {
 	}
 
 	/**
+	 * Setter
 	 * @param departement the departement to set
 	 */
 	public void setDepartement(Departement departement) {
 		this.departement = departement;
 	}
+	
+	
 	
 }

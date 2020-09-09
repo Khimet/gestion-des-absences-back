@@ -1,6 +1,5 @@
 package dev.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,12 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.controller.vm.JFerieRttVM;
-import dev.domain.JFerieRtt;
-import dev.repository.JFerieRttRepo;
 import dev.service.JFerieRttService;
 
 /**
- * @author khimet
+ * @author robin
  *
  */
 @RestController
@@ -38,39 +35,19 @@ public class JFerieRttController {
 	
 	private JFerieRttService jFerieRttService;
 
-	/**
-	 * @param jourFerieRttRepo
-	 */
 	public JFerieRttController(JFerieRttService jFerieRttService) {
 		super();
 		this.jFerieRttService = jFerieRttService;
 	}
-	
-	@GetMapping
-	public ResponseEntity<?> GetJourFerieRttMoisAnnee(
-			@RequestParam("mois") Integer mois,
-			@RequestParam("annee") Integer annee){
-		
-		if ( mois == null || annee == null || mois < 0 || annee <= 0 ) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
-		}
-		
-		List<JFerieRttVM> resultat = jFerieRttService.getJFerieRttMoisAnnee(mois, annee);
-		
-		
-		return ResponseEntity.status(HttpStatus.OK).body(resultat);
-		
-	}
-	
+
 	@GetMapping("annees")
 	public List<String> getAllAnnee(){
-		return jFerieRttService.getListAnnee();
+		return this.jFerieRttService.getListAnnee();
 	}
 	
 	@GetMapping("{annee}")
 	public List<JFerieRttVM> getAllJFerieRtt(@PathVariable String annee){
-		return jFerieRttService.getListJFerieRtt(annee);
-
+		return this.jFerieRttService.getListJFerieRtt(annee);
 	}
 	
 	@PostMapping
@@ -95,12 +72,21 @@ public class JFerieRttController {
 		}
 		return this.jFerieRttService.updateJFerieRtt(modifJFerieRtt);
 	}
-	
-	
-	
-	
-	
-	
-	
 
+	
+	@GetMapping
+	public ResponseEntity<?> GetJourFerieRttMoisAnnee(
+			@RequestParam("mois") Integer mois,
+			@RequestParam("annee") Integer annee){
+		
+		if ( mois == null || annee == null || mois < 0 || annee <= 0 ) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+		}
+		
+		List<JFerieRttVM> resultat = this.jFerieRttService.getJFerieRttMoisAnnee(mois, annee);
+		
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resultat);
+		
+	}
 }

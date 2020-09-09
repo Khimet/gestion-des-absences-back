@@ -12,9 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import dev.domain.enumerations.Departement;
-import dev.domain.enumerations.Role;
-
-import java.util.List;
 
 @Entity
 public class Collegue {

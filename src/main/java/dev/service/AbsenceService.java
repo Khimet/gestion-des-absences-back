@@ -3,6 +3,8 @@
  */
 package dev.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,15 +16,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import dev.controller.vm.AbsencePostVM;
 import dev.controller.vm.AbsenceVM;
-import dev.controller.vm.JFerieRttVM;
+import dev.controller.vm.ValidationVM;
+import dev.controller.vm.AbsenceVMStringDate;
 import dev.domain.Absence;
 import dev.domain.Collegue;
-import dev.domain.JFerieRtt;
 import dev.domain.enumerations.Departement;
 import dev.domain.enumerations.Role;
 import dev.domain.enumerations.Status;
+import dev.domain.enumerations.Type;
 import dev.repository.AbsenceRepo;
 import dev.repository.CollegueRepo;
 
@@ -41,17 +43,17 @@ public class AbsenceService extends LogService {
 		this.absenceRepo = absenceRepo;
 	}
 
-	public List<AbsenceVM> findAbsences() {
+	public List<AbsenceVMStringDate> findAbsences() {
 
 		Optional<Collegue> col = this.getColConnecte();
 
 		if (col.isPresent()) {
 
 			List<Absence> tmp = this.absenceRepo.findAbsences(col.get());
-			List<AbsenceVM> res = new ArrayList<>();
+			List<AbsenceVMStringDate> res = new ArrayList<>();
 
 			for (Absence a : tmp) {
-				res.add(new AbsenceVM(a.getUuid(), a.getDateDebut(), a.getDateFin(), a.getType(), a.getStatus(),
+				res.add(new AbsenceVMStringDate(a.getUuid(), a.getDateDebut(), a.getDateFin(), a.getType(), a.getStatus(),
 						a.getMotif()));
 			}
 			return res;
@@ -68,6 +70,41 @@ public class AbsenceService extends LogService {
 		}
 	}
 
+	public ResponseEntity<?> patchAbs(AbsenceVMStringDate updateAbs) {
+
+		Optional<Collegue> col = getColConnecte();
+		// TODO: Convertir AbsenceVMStringDate en Absence
+		
+		LocalDate dateDebut = LocalDate.parse(updateAbs.getDateDebut(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		LocalDate dateFin = LocalDate.parse(updateAbs.getDateFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+		
+		if (col.isPresent()) {
+			
+			List<Absence> listOldAbsence = this.absenceRepo.findAbsences(col.get());
+			boolean valide = true;
+
+			for (Absence absenceOld : listOldAbsence) {
+
+				if (!(dateFin.isBefore(absenceOld.getDateDebut())
+						|| dateDebut.isAfter(absenceOld.getDateFin())) && !(updateAbs.getUuid().equals(absenceOld.getUuid()))) {
+
+					valide = false;
+				}
+			}
+			
+			 if (valide) {
+				 
+				 this.absenceRepo.patchAbs(dateDebut, dateFin, updateAbs.getType(), updateAbs.getMotif(), updateAbs.getUuid(), col.get());
+				 return ResponseEntity.status(HttpStatus.OK).body("");	 
+			 }
+			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dates se chevauchent");
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Collegue non présent");
+		
+		
+	}
+	
 	public ResponseEntity<?> saveAbs(AbsenceVM absenceNew) {
 		Optional<Collegue> col = getColConnecte();
 
@@ -93,20 +130,22 @@ public class AbsenceService extends LogService {
 
 				return ResponseEntity.status(HttpStatus.OK).body(abspost);
 			}
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("les dates se chevauchent");
 
 		}		
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dates se chevauchent");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("collegue non connecté");
 	}
 
-	public List<AbsenceVM> findAbsenceMoisAnnee(int mois, int annee) {
-
+	public List<AbsenceVM> findAbsenceMoisAnnee(int mois, int annee){
+		
 		List<Absence> tmp = this.absenceRepo.findAbsenceMoisAnnee(mois, annee);
 		List<AbsenceVM> resultatsAbs = new ArrayList<>();
-
-		tmp.forEach(abs -> {
-			resultatsAbs.add(new AbsenceVM(abs));
-		});
-		return resultatsAbs;
+     
+	    tmp.forEach(abs -> {
+	         resultatsAbs.add(new AbsenceVM(abs));
+	    });
+	    return resultatsAbs;
 	}
 
 	public List<AbsenceVM> getAbsencesValideeMoisAnneeDepartement(int mois, int annee, Departement departement) {
@@ -115,48 +154,47 @@ public class AbsenceService extends LogService {
 
 		if (col.isPresent() && col.get().getRoles().get(0).getRole() == Role.ROLE_MANAGER) {
 
-			List<Absence> absMoisAnneeDepartement = absenceRepo.findAbsencesValideeMoisAnneeDepartement(mois, annee,
-					departement);
-
+			List<Absence> absMoisAnneeDepartement = absenceRepo.findAbsencesValideeMoisAnneeDepartement(mois, annee, departement);
 			List<AbsenceVM> resultat = new ArrayList<>();
 
 			absMoisAnneeDepartement.forEach(a -> {
 				resultat.add(new AbsenceVM(a));
 			});
-
 			return resultat;
 
 		}
-
-		throw new RuntimeException(
-				"Error col non connecté ou vous n'êtes pas un manager et donc vous n'êtes pas autorisé");
+		throw new RuntimeException("Error col non connecté ou vous n'êtes pas un manager et donc vous n'êtes pas autorisé");
 	}
-	
-	public ResponseEntity<?> patchAbs(AbsenceVM updateAbs) {
-		Optional<Collegue> col = getColConnecte();
-		if (col.isPresent()) {
-			
-			List<Absence> listOldAbsence = this.absenceRepo.findAbsences(col.get());
-			boolean valide = true;
 
-			for (Absence absenceOld : listOldAbsence) {
+	public ResponseEntity<?> getListAbsenceParRole() {
+		Optional<Collegue> col = this.getColConnecte();
 
-				if (!(updateAbs.getDateFin().isBefore(absenceOld.getDateDebut())
-						|| updateAbs.getDateDebut().isAfter(absenceOld.getDateFin())) && !(updateAbs.getUuid().equals(absenceOld.getUuid()))) {
-
-					valide = false;
-				}
-			}
-			
-			 if (valide) {
-				 this.absenceRepo.patchAbs(updateAbs.getDateDebut(), updateAbs.getDateFin(), updateAbs.getType(), updateAbs.getMotif(), updateAbs.getUuid(), col.get());
-				 return ResponseEntity.status(HttpStatus.OK).body("");	 
-			 }
-			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Dates se chevauchent");
-			
+		if (col.isPresent()) {		
+			List<ValidationVM> vm = this.absenceRepo.findByRole(col.get().getDepartement());
+			return ResponseEntity.status(HttpStatus.OK).body(vm);
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Collegue non présent");
-		
-		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("erreur collegue non connecté");
+	}
+
+	public ResponseEntity<?> replaceStatusAbs(ValidationVM vvm) {
+		Optional<Collegue> col = this.getColConnecte();
+
+		if (col.isPresent()) {
+			this.absenceRepo.replaceStatusAbs(vvm.getStatus(), vvm.getUuid());
+			if(vvm.getStatus().equals(Status.STATUS_REJETEE)) {
+				
+				Collegue collegue = this.absenceRepo.getColByAbsUuid(vvm.getUuid());
+				
+				if(vvm.getType().equals(Type.TYPE_RTT)) {
+					this.getColRepo().setCompteursRttPlus1(collegue.getNbRtt()+1, collegue.getId());
+				}
+				else {
+					this.getColRepo().setCompteursCongePlus1(collegue.getNbCongesPayes()+1, collegue.getId());
+				}
+					
+			}
+			return ResponseEntity.status(HttpStatus.OK).body("");
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("erreur collegue non connecté");
 	}
 }

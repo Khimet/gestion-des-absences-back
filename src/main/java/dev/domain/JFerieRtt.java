@@ -46,7 +46,6 @@ public class JFerieRtt {
 		this.commentaire = commentaire;
 	}
 	
-	
 	/**
 	 * Getter
 	 * @return the uuid

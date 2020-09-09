@@ -43,14 +43,6 @@ public class StartupListener {
 //        this.collegueRepo.save(col1);
 //  
 //        Collegue col2 = new Collegue();
-//        col2.setNom("Renault");
-//        col2.setPrenom("Zoé");
-//        col2.setEmail("zoe@dev.fr");
-//        col2.setMotDePasse(passwordEncoder.encode("superpass"));
-//        col2.setRoles(Arrays.asList(new RoleCollegue(col2, Role.ROLE_MANAGER))); 
-//        col2.setNbCongesPayes(17);
-//        col2.setNbRtt(13);
-//        col2.setDepartement(Departement.POLE_MANAGEMENT);
-//        this.collegueRepo.save(col2);
+
     }
 }

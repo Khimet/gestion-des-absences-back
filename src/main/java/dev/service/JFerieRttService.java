@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import dev.controller.vm.JFerieRttVM;
 import dev.domain.Collegue;
 import dev.domain.JFerieRtt;
-import dev.domain.RoleCollegue;
 import dev.domain.enumerations.Role;
 import dev.repository.CollegueRepo;
 import dev.repository.JFerieRttRepo;
@@ -33,26 +32,29 @@ import dev.repository.JFerieRttRepo;
  */
 @Service
 @Transactional
-public class JFerieRttService extends LogService{
-	
+public class JFerieRttService extends LogService {
+
 	private JFerieRttRepo jFerieRttRepo;
 
-	/** Constructeur
+	/**
+	 * Constructeur
+	 * 
 	 * @param collegueRepo
 	 */
-	public JFerieRttService(JFerieRttRepo jFerieRttRepo ,CollegueRepo collegueRepo) {
+	public JFerieRttService(JFerieRttRepo jFerieRttRepo, CollegueRepo collegueRepo) {
 		super(collegueRepo);
 		this.jFerieRttRepo = jFerieRttRepo;
 	}
-	
+
 	public List<String> getListAnnee() {
 		Optional<Collegue> col = this.getColConnecte();
-		
+
 		if (col.isPresent()) {
 			List<LocalDate> tmp = this.jFerieRttRepo.findAllDate();
-			List<Integer> listAnnee = tmp.stream().map(v -> v.getYear()).distinct().sorted((f1, f2) -> Integer.compare(f2, f1)).collect(Collectors.toList());
+			List<Integer> listAnnee = tmp.stream().map(v -> v.getYear()).distinct()
+					.sorted((f1, f2) -> Integer.compare(f2, f1)).collect(Collectors.toList());
 			return listAnnee.stream().map(v -> v.toString()).collect(Collectors.toList());
-			
+
 		}
 		throw new RuntimeException("Error col non connecté - getListAnnee");
 	}
@@ -134,19 +136,14 @@ public class JFerieRttService extends LogService{
 		Optional<Collegue> col = this.getColConnecte();
 		
 		if (col.isPresent() && col.get().getRoles().get(0).getRole() == Role.ROLE_MANAGER) {
-			
 			List<JFerieRtt> jFeriesRttsMoisAnnee = jFerieRttRepo.findJourFerieRttMoisAnnee(mois, année);
-			
 			List<JFerieRttVM> resultats = new ArrayList<>();
 			
 			jFeriesRttsMoisAnnee.forEach(j -> {
 				resultats.add(new JFerieRttVM(j));
 			});
-			
 			return resultats;
-			
 		}
-		
 		throw new RuntimeException("Error col non connecté ou vous n'êtes pas un manager et donc vous n'êtes pas autorisé");
 	}
 }
