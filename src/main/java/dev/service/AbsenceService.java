@@ -24,6 +24,7 @@ import dev.domain.Collegue;
 import dev.domain.enumerations.Departement;
 import dev.domain.enumerations.Role;
 import dev.domain.enumerations.Status;
+import dev.domain.enumerations.Type;
 import dev.repository.AbsenceRepo;
 import dev.repository.CollegueRepo;
 
@@ -181,12 +182,19 @@ public class AbsenceService extends LogService {
 		if (col.isPresent()) {
 			this.absenceRepo.replaceStatusAbs(vvm.getStatus(), vvm.getUuid());
 			if(vvm.getStatus().equals(Status.STATUS_REJETEE)) {
+				
 				Collegue collegue = this.absenceRepo.getColByAbsUuid(vvm.getUuid());
-				// TODO rajouter solde à (collegue) un type de (vvl.getType()) 
+				
+				if(vvm.getType().equals(Type.TYPE_RTT)) {
+					this.getColRepo().setCompteursRttPlus1(collegue.getNbRtt()+1, collegue.getId());
+				}
+				else {
+					this.getColRepo().setCompteursCongePlus1(collegue.getNbCongesPayes()+1, collegue.getId());
+				}
+					
 			}
 			return ResponseEntity.status(HttpStatus.OK).body("");
 		}
-		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("erreur collegue non connecté");
 	}
 }
