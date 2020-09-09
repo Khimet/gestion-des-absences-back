@@ -149,9 +149,9 @@ public class AbsenceService extends LogService {
 	}
 
 	public List<AbsenceVM> getAbsencesValideeMoisAnneeDepartement(int mois, int annee, Departement departement) {
-		
+
 		Optional<Collegue> col = this.getColConnecte();
-		
+
 		if (col.isPresent() && col.get().getRoles().get(0).getRole() == Role.ROLE_MANAGER) {
 
 			List<Absence> absMoisAnneeDepartement = absenceRepo.findAbsencesValideeMoisAnneeDepartement(mois, annee, departement);

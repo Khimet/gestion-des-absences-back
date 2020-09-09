@@ -16,6 +16,9 @@ public interface CollegueRepo extends JpaRepository<Collegue, Long> {
     
     @Query("select c from Collegue c where c.departement = ?1")
 	List<Collegue> findCollegueDepartement(Departement depart);
+    
+    @Query("select DISTINCT c.departement from Collegue c")
+    List<Departement> findAllDistinctDepartement();
 
 
     @Modifying
