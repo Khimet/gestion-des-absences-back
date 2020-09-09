@@ -56,11 +56,6 @@ public class AbsenceController {
 	public List<AbsenceVMStringDate> getListAbsence() {
 		return this.absenceService.findAbsences();	
 	}
-
-	@GetMapping
-	public List<AbsenceVMStringDate> getListAbsence() {
-		return this.absenceService.findAbsences();	
-	}
 	
 	@DeleteMapping("{uuid}")
 	public void supprAbsence(@PathVariable UUID uuid) {
@@ -119,34 +114,4 @@ public class AbsenceController {
 		return this.absenceService.replaceStatusAbs(vvm);
 	}
 	
-	@PatchMapping
-	public ResponseEntity<?> replaceAbsence(@RequestBody AbsenceVM updateAbs) {
-		return this.absenceService.patchAbs(updateAbs);
-	}
-	
-	@GetMapping("ma")
-    public ResponseEntity<?> getListAbsenceMoisAnnee(
-            @RequestParam("mois") Integer mois,
-            @RequestParam("annee") Integer annee){
-        
-        if ( mois == null || annee == null || mois < 0 || annee <= 0 ) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
-        }
-        
-        List<AbsenceVM> absence = absenceService.findAbsenceMoisAnnee(mois, annee);
-       
-        return ResponseEntity.status(HttpStatus.OK).body(absence);
-    }
-	
-	@Secured("ROLE_MANAGER")
-	@GetMapping("par-role")
-	public ResponseEntity<?> getListAbsenceParRole(){
-		return this.absenceService.getListAbsenceParRole();
-	}
-	
-	@Secured("ROLE_MANAGER")
-	@PatchMapping("par-role")
-	public ResponseEntity<?> replaceStatusAbs(@RequestBody ValidationVM vvm){
-		return this.absenceService.replaceStatusAbs(vvm);
-	}
 }
