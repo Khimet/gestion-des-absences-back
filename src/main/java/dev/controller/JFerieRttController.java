@@ -33,7 +33,7 @@ import dev.service.JFerieRttService;
  */
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("jferiestt")
+@RequestMapping("jferiesrtt")
 public class JFerieRttController {
 	
 	private JFerieRttService jFerieRttService;
@@ -41,7 +41,7 @@ public class JFerieRttController {
 	/**
 	 * @param jourFerieRttRepo
 	 */
-	public JFerieRttController(JFerieRttService jourFerieRttService) {
+	public JFerieRttController(JFerieRttService jFerieRttService) {
 		super();
 		this.jFerieRttService = jFerieRttService;
 	}
