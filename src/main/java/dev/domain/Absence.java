@@ -15,6 +15,7 @@ import dev.domain.enumerations.Status;
 import dev.domain.enumerations.Type;
 
 /**
+ * Classe qui représente une absence
  * @author robin
  *
  */
@@ -44,6 +45,14 @@ public class Absence {
 		this.uuid = UUID.randomUUID();
 	}
 
+	/** Constructeur
+	 * @param dateDebut
+	 * @param dateFin
+	 * @param type
+	 * @param status
+	 * @param motif
+	 * @param collegue_abs
+	 */
 	public Absence(LocalDate dateDebut, LocalDate dateFin, Type type, Status status, String motif, Collegue collegue_abs) {
 		super();
 		this.uuid = UUID.randomUUID();

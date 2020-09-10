@@ -6,11 +6,14 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
-import dev.domain.Absence;
 import dev.domain.Collegue;
 import dev.domain.enumerations.Departement;
 
+/**
+ * Interface CollegueRepo qui permet de récupérer les données des collegues dans la BDD. 
+ * @author eltahhansana
+ *
+ */
 public interface CollegueRepo extends JpaRepository<Collegue, Long> {
 
     Optional<Collegue> findByEmail(String email);

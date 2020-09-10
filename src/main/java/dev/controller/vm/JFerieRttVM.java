@@ -1,6 +1,3 @@
-/**
- * 
- */
 package dev.controller.vm;
 
 import java.time.LocalDate;
@@ -10,6 +7,11 @@ import dev.domain.JFerieRtt;
 import dev.domain.enumerations.TypeFerieRtt;
 
 
+/**
+ * DTO JFerieRttVM
+ * @author eltahhansana
+ *
+ */
 public class JFerieRttVM {
 	
 	private UUID uuid;
