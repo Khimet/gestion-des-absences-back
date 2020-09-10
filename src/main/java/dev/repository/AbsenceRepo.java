@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import dev.controller.vm.ValidationVM;
 import dev.domain.Absence;
 import dev.domain.Collegue;
+import dev.domain.enumerations.Type;
 import dev.domain.enumerations.Departement;
 import dev.domain.enumerations.Status;
 import dev.domain.enumerations.Type;

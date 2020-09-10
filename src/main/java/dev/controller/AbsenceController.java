@@ -28,6 +28,8 @@ import dev.controller.vm.ValidationVM;
 import dev.controller.vm.AbsenceVMStringDate;
 import dev.domain.enumerations.Departement;
 import dev.service.AbsenceService;
+import dev.controller.vm.ValidationVM;
+import dev.controller.vm.AbsenceVMStringDate;
 
 /**
  * @author robin
@@ -49,7 +51,7 @@ public class AbsenceController {
 		super();
 		this.absenceService = absenceRepo;
 	}
-
+	
 	@GetMapping
 	public List<AbsenceVMStringDate> getListAbsence() {
 		return this.absenceService.findAbsences();	
@@ -111,4 +113,5 @@ public class AbsenceController {
 	public ResponseEntity<?> replaceStatusAbs(@RequestBody ValidationVM vvm){
 		return this.absenceService.replaceStatusAbs(vvm);
 	}
+	
 }
