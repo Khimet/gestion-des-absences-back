@@ -105,25 +105,29 @@ public class AbsenceService extends LogService {
 		
 	}
 	
-	public ResponseEntity<?> saveAbs(AbsenceVM absenceNew) {
+	public ResponseEntity<?> saveAbs(AbsenceVMStringDate absenceNew) {
 		Optional<Collegue> col = getColConnecte();
 
 		if (col.isPresent()) {
+			
+			LocalDate dateDebut = LocalDate.parse(absenceNew.getDateDebut(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			LocalDate dateFin = LocalDate.parse(absenceNew.getDateFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
 			
 			List<Absence> listOldAbsence = this.absenceRepo.findAbsences(col.get());
 			boolean valide = true;
 
 			for (Absence absenceOld : listOldAbsence) {
 
-				if (!(absenceNew.getDateFin().isBefore(absenceOld.getDateDebut())
-						|| absenceNew.getDateDebut().isAfter(absenceOld.getDateFin()))) {
+				if (!(dateFin.isBefore(absenceOld.getDateDebut())
+						|| dateDebut.isAfter(absenceOld.getDateFin()))) {
 
 					valide = false;
 				}
 			}
 			
 			if (valide) {
-				Absence tmp = absenceRepo.save(new Absence(absenceNew.getDateDebut(), absenceNew.getDateFin(),
+				Absence tmp = absenceRepo.save(new Absence(dateDebut, dateFin,
 						absenceNew.getType(), Status.STATUS_INITIAL, absenceNew.getMotif(), col.get()));
 				AbsenceVM abspost = new AbsenceVM(tmp.getDateDebut(), tmp.getDateFin(), tmp.getType(),
 						tmp.getMotif());

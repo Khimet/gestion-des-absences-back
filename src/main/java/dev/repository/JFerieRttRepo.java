@@ -11,7 +11,12 @@ import org.springframework.data.jpa.repository.Query;
 import dev.domain.JFerieRtt;
 import dev.domain.enumerations.TypeFerieRtt;
 
-public interface JFerieRttRepo extends JpaRepository<JFerieRtt, Integer>{
+/**
+ * Interface JFerieRttRepo qui permet de récupérer les données de JFerieRtt dans la BDD
+ * @author eltahhansana
+ *
+ */
+public interface JFerieRttRepo extends JpaRepository<JFerieRtt, UUID>{
 	
 	@Query("select j from JFerieRtt j where EXTRACT (MONTH FROM j.date) = ?1 and EXTRACT (YEAR FROM j.date) = ?2")
 	List<JFerieRtt> findJourFerieRttMoisAnnee(int mois, int annee);
@@ -32,5 +37,8 @@ public interface JFerieRttRepo extends JpaRepository<JFerieRtt, Integer>{
 	@Modifying
 	@Query("update JFerieRtt j set j.date = ?1, j.type = ?2, j.commentaire = ?3 where j.uuid = ?4")
 	public void updateJFerieRtt (LocalDate date, TypeFerieRtt type, String commentaire, UUID uuid);
+	
+	@Query("select j from JFerieRtt j")
+	public List<JFerieRtt> findAllJFerieRtt();
 
 }

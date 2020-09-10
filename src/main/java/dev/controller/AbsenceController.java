@@ -63,7 +63,7 @@ public class AbsenceController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> newAbsence(@RequestBody @Valid AbsenceVM newAbs, BindingResult res) { 
+	public ResponseEntity<?> newAbsence(@RequestBody @Valid AbsenceVMStringDate newAbs, BindingResult res) { 
 		return this.absenceService.saveAbs(newAbs);
 	}
 	

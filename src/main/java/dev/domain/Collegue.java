@@ -13,6 +13,11 @@ import javax.persistence.OneToMany;
 
 import dev.domain.enumerations.Departement;
 
+/**
+ * Classe entite qui represente un collegue.
+ * @author eltahhansana
+ *
+ */
 @Entity
 public class Collegue {
 
@@ -45,6 +50,17 @@ public class Collegue {
 		super();
 	}
 
+	/** Constructeur
+	 * @param id
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param motDePasse
+	 * @param roles
+	 * @param absences
+	 * @param nbRtt
+	 * @param nbCongesPayes
+	 */
 	public Collegue(Long id, String nom, String prenom, String email, String motDePasse, List<RoleCollegue> roles,
 			List<Absence> absences, int nbRtt, int nbCongesPayes) {
 		super();
@@ -59,53 +75,90 @@ public class Collegue {
 		this.nbCongesPayes = nbCongesPayes;
 	}
 
+	
+	/** Getter
+	 * @return the id
+	 */
 	public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/** Setter
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	/** Getter
+	 * @return the nom
+	 */
+	public String getNom() {
+		return nom;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	/** Setter
+	 * @param nom the nom to set
+	 */
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
-    public String getMotDePasse() {
-        return motDePasse;
-    }
+	/** Getter
+	 * @return the prenom
+	 */
+	public String getPrenom() {
+		return prenom;
+	}
 
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
-    }
+	/** Setter
+	 * @param prenom the prenom to set
+	 */
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
 
-    public List<RoleCollegue> getRoles() {
-        return roles;
-    }
+	/** Getter
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
 
-    public void setRoles(List<RoleCollegue> roles) {
-        this.roles = roles;
-    }
+	/** Setter
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getNom() {
-        return nom;
-    }
+	/** Getter
+	 * @return the motDePasse
+	 */
+	public String getMotDePasse() {
+		return motDePasse;
+	}
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+	/** Setter
+	 * @param motDePasse the motDePasse to set
+	 */
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
 
-    public String getPrenom() {
-        return prenom;
-    }
+	/** Getter
+	 * @return the roles
+	 */
+	public List<RoleCollegue> getRoles() {
+		return roles;
+	}
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
+	/** Setter
+	 * @param roles the roles to set
+	 */
+	public void setRoles(List<RoleCollegue> roles) {
+		this.roles = roles;
+	}
 
 	/**
 	 * Getter

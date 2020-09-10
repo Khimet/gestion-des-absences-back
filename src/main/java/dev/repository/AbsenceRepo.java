@@ -11,8 +11,6 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
-import dev.controller.vm.AbsenceVM;
 import dev.controller.vm.ValidationVM;
 import dev.domain.Absence;
 import dev.domain.Collegue;
@@ -22,6 +20,7 @@ import dev.domain.enumerations.Status;
 import dev.domain.enumerations.Type;
 
 /**
+ * Classe AbsenceRepo qui permet de récupérer les donées en BDD.
  * @author robin
  *
  */

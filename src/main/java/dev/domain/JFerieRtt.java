@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import dev.domain.enumerations.TypeFerieRtt;
 
 /**
+ * Classe entité JFerieRTT qui represente jour ferie et jour rtt
  * @author robin
  *
  */
@@ -37,6 +38,12 @@ public class JFerieRtt {
 		this.uuid = UUID.randomUUID();
 	}
 	
+	/** Constructeur
+	 * @param date
+	 * @param type
+	 * @param valide
+	 * @param commentaire
+	 */
 	public JFerieRtt(LocalDate date, TypeFerieRtt type, boolean valide, String commentaire) {
 		super();
 		this.uuid = UUID.randomUUID();

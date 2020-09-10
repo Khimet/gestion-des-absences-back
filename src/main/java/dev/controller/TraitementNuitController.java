@@ -3,19 +3,16 @@
  */
 package dev.controller;
 
-import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import dev.controller.vm.AbsenceVMStringDate;
-import dev.repository.AbsenceRepo;
 import dev.service.AbsenceService;
 import dev.service.TraitementNuitService;
 
 /**
+ * Classe controller pour le traitement de nuit.
  * @author eltahhansana
  *
  */
@@ -28,16 +25,16 @@ public class TraitementNuitController {
 	private AbsenceService absenceService;
 
 	/** Constructeur
-	 * 
+	 * @param traitNuitServ
+	 * @param absenceRepo
 	 */
 	public TraitementNuitController(TraitementNuitService traitNuitServ, AbsenceService absenceRepo) {
 		super();
 		this.trNuitService = traitNuitServ;
-		this.absenceService = absenceRepo;
-		
-		
+		this.absenceService = absenceRepo;		
 	}
 	
+	// Appel à la methode su service qui s'occupe du traitement de nuit
 	@GetMapping
 	public void getTraitementNuit() {
 		this.trNuitService.updatesCompteur();
