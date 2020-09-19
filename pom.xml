@@ -116,9 +116,9 @@
 			</activation>
 			<properties>
 				<jdbc.driver>org.postgresql.Driver</jdbc.driver>
-				<jdbc.url>jdbc:postgresql://ec2-54-155-22-153.eu-west-1.compute.amazonaws.com:5432/dfdutka8ih0ihu</jdbc.url>
-				<jdbc.user>vxwtsewvglltfa</jdbc.user>
-				<jdbc.pass>e8c6e24269668494e7c11e34fe732b78e4b4be7174c020fc5d5df727d7af9a50</jdbc.pass>
+				<jdbc.url>jdbc:postgresql://ec2-54-246-85-151.eu-west-1.compute.amazonaws.com:5432/d6s470bkvku7hn</jdbc.url>
+				<jdbc.user>erqxgaubflelhv</jdbc.user>
+				<jdbc.pass>f8547e5e5fb082e6f917ad498f7ca6731e5cf5ac3f4e0625d310c808a9bdc572</jdbc.pass>
 				<jpa.hibernate.ddl>update</jpa.hibernate.ddl>
 				<jdbc.dialect>org.hibernate.dialect.PostgreSQLDialect</jdbc.dialect>
 				<jdbc.connections.max.active>10</jdbc.connections.max.active>
@@ -138,9 +138,9 @@
 			</activation>
 			<properties>
 				<jdbc.driver>org.postgresql.Driver</jdbc.driver>
-				<jdbc.url>jdbc:postgresql://ec2-54-155-22-153.eu-west-1.compute.amazonaws.com:5432/dfdutka8ih0ihu</jdbc.url>
-				<jdbc.user>vxwtsewvglltfa</jdbc.user>
-				<jdbc.pass>e8c6e24269668494e7c11e34fe732b78e4b4be7174c020fc5d5df727d7af9a50</jdbc.pass>
+				<jdbc.url>jdbc:postgresql://ec2-54-246-85-151.eu-west-1.compute.amazonaws.com:5432/d6s470bkvku7hn</jdbc.url>
+				<jdbc.user>erqxgaubflelhv</jdbc.user>
+				<jdbc.pass>f8547e5e5fb082e6f917ad498f7ca6731e5cf5ac3f4e0625d310c808a9bdc572</jdbc.pass>
 				<jpa.hibernate.ddl>update</jpa.hibernate.ddl>
 				<jdbc.dialect>org.hibernate.dialect.PostgreSQLDialect</jdbc.dialect>
 				<jdbc.connections.max.active>10</jdbc.connections.max.active>
